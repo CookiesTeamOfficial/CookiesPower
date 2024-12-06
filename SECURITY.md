@@ -1,6 +1,6 @@
 ### Date (Дата): 06.12.2024
 
-# English Version
+## English Version
 
 # Privacy Policy
 
@@ -47,7 +47,9 @@ We may update this Privacy Policy from time to time. We will notify users of any
 
 If you have any questions about this Privacy Policy, please feel free to contact us via our GitHub repository or in our [discord guild](https://discord.gg/Cf5Q3Pht7Y).
 
-# Русская версия (Russian Version):
+---
+
+## Русская версия (Russian Version):
 
 # Политика конфиденциальности
 

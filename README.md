@@ -1,4 +1,4 @@
-### English Version:
+## English Version:
 
 # CookiesPower
 
@@ -55,7 +55,7 @@ This project is licensed under the **Apache License 2.0**. See the [LICENSE](./L
     ```
 ---
 
-### Русская версия (Russian Version):
+## Русская версия (Russian Version):
 
 # CookiesPower
 
