@@ -1,0 +1,191 @@
+# EN:
+# Time format
+# Use s, sec, second - to return in seconds
+# Use m, min, minute - to return in minutes
+# Use h, hour - to return in hours
+# Use d, day - to return in days
+# Use w, week - to return in weeks
+# Use y, year - to return in years
+
+# RU:
+# Формат времени
+# Используйте с, сек, секунд - для возврата в секундах
+# Используйте м, мин, минут - для возврата в минутах
+# Используйте ч, час - для возврата в часах
+# Используйте д, день, дн - для возврата в днях
+# Используйте нед, неделя - для возврата в неделях
+# Используйте г, год, л - для возврата в годах
+
+# UK:
+# Формат часу
+# Використовуйте с, сек, секунда - для повернення у секундах
+# Використовуйте хв, хвилина - для повернення у хвилинах
+# Використовуйте год, година - для повернення у годинах
+# Використовуйте д, день - для повернення у днях
+# Використовуйте тиж, тиждень - для повернення у тижнях
+# Використовуйте р, рік - для повернення у роках
+
+animations:
+  abc:
+    change-interval: 1s
+    texts:
+      - "&aA"
+      - "&bB"
+      - "&cC"
+      - "&dD"
+      - "&eE"
+      - "&fF"
+  your-server:
+    change-interval: 0.1s
+    texts:
+      - "#088FFBʏ#1999FBᴏ#29A3FBᴜ#3AADFCʀ #4AB7FCꜱ#5BC1FCᴇ#6BCBFCʀ#7CD5FCᴠ#8CDFFDᴇ#9DE9FDʀ"
+      - "#1999FBʏ#088FFBᴏ#1999FBᴜ#29A3FBʀ #3AADFCꜱ#4AB7FCᴇ#5BC1FCʀ#6BCBFCᴠ#7CD5FCᴇ#8CDFFDʀ"
+      - "#29A3FBʏ#1999FBᴏ#088FFBᴜ#1999FBʀ #29A3FBꜱ#3AADFCᴇ#4AB7FCʀ#5BC1FCᴠ#6BCBFCᴇ#7CD5FCʀ"
+      - "#3AADFCʏ#29A3FBᴏ#1999FBᴜ#088FFBʀ #1999FBꜱ#29A3FBᴇ#3AADFCʀ#4AB7FCᴠ#5BC1FCᴇ#6BCBFCʀ"
+      - "#4AB7FCʏ#3AADFCᴏ#29A3FBᴜ#1999FBʀ #088FFBꜱ#1999FBᴇ#29A3FBʀ#3AADFCᴠ#4AB7FCᴇ#5BC1FCʀ"
+      - "#5BC1FCʏ#4AB7FCᴏ#3AADFCᴜ#29A3FBʀ #1999FBꜱ#088FFBᴇ#1999FBʀ#29A3FBᴠ#3AADFCᴇ#4AB7FCʀ"
+      - "#6BCBFCʏ#5BC1FCᴏ#4AB7FCᴜ#3AADFCʀ #29A3FBꜱ#1999FBᴇ#088FFBʀ#1999FBᴠ#29A3FBᴇ#3AADFCʀ"
+      - "#7CD5FCʏ#6BCBFCᴏ#5BC1FCᴜ#4AB7FCʀ #3AADFCꜱ#29A3FBᴇ#1999FBʀ#088FFBᴠ#1999FBᴇ#29A3FBʀ"
+      - "#8CDFFDʏ#7CD5FCᴏ#6BCBFCᴜ#5BC1FCʀ #4AB7FCꜱ#3AADFCᴇ#29A3FBʀ#1999FBᴠ#088FFBᴇ#1999FBʀ"
+      - "#9DE9FDʏ#8CDFFDᴏ#7CD5FCᴜ#6BCBFCʀ #5BC1FCꜱ#4AB7FCᴇ#3AADFCʀ#29A3FBᴠ#1999FBᴇ#088FFBʀ"
+      - "#ADF3FDʏ#9DE9FDᴏ#8CDFFDᴜ#7CD5FCʀ #6BCBFCꜱ#5BC1FCᴇ#4AB7FCʀ#3AADFCᴠ#29A3FBᴇ#1999FBʀ"
+      - "#9DE9FDʏ#ADF3FDᴏ#9DE9FDᴜ#8CDFFDʀ #7CD5FCꜱ#6BCBFCᴇ#5BC1FCʀ#4AB7FCᴠ#3AADFCᴇ#29A3FBʀ"
+      - "#8CDFFDʏ#9DE9FDᴏ#ADF3FDᴜ#9DE9FDʀ #8CDFFDꜱ#7CD5FCᴇ#6BCBFCʀ#5BC1FCᴠ#4AB7FCᴇ#3AADFCʀ"
+      - "#7CD5FCʏ#8CDFFDᴏ#9DE9FDᴜ#ADF3FDʀ #9DE9FDꜱ#8CDFFDᴇ#7CD5FCʀ#6BCBFCᴠ#5BC1FCᴇ#4AB7FCʀ"
+      - "#6BCBFCʏ#7CD5FCᴏ#8CDFFDᴜ#9DE9FDʀ #ADF3FDꜱ#9DE9FDᴇ#8CDFFDʀ#7CD5FCᴠ#6BCBFCᴇ#5BC1FCʀ"
+      - "#5BC1FCʏ#6BCBFCᴏ#7CD5FCᴜ#8CDFFDʀ #9DE9FDꜱ#ADF3FDᴇ#9DE9FDʀ#8CDFFDᴠ#7CD5FCᴇ#6BCBFCʀ"
+      - "#4AB7FCʏ#5BC1FCᴏ#6BCBFCᴜ#7CD5FCʀ #8CDFFDꜱ#9DE9FDᴇ#ADF3FDʀ#9DE9FDᴠ#8CDFFDᴇ#7CD5FCʀ"
+      - "#3AADFCʏ#4AB7FCᴏ#5BC1FCᴜ#6BCBFCʀ #7CD5FCꜱ#8CDFFDᴇ#9DE9FDʀ#ADF3FDᴠ#9DE9FDᴇ#8CDFFDʀ"
+      - "#29A3FBʏ#3AADFCᴏ#4AB7FCᴜ#5BC1FCʀ #6BCBFCꜱ#7CD5FCᴇ#8CDFFDʀ#9DE9FDᴠ#ADF3FDᴇ#9DE9FDʀ"
+      - "#1999FBʏ#29A3FBᴏ#3AADFCᴜ#4AB7FCʀ #5BC1FCꜱ#6BCBFCᴇ#7CD5FCʀ#8CDFFDᴠ#9DE9FDᴇ#ADF3FDʀ"
+  cookiespower:
+    change-interval: 50ms
+    texts:
+      - "&#FF9900Co&#FF9300ok&#FF8D00ie&#FF8800sP&#FF8200ow&#FF7C00er"
+      - "&#FF9300Co&#FF9900ok&#FF9300ie&#FF8D00sP&#FF8800ow&#FF8200er"
+      - "&#FF8D00Co&#FF9300ok&#FF9900ie&#FF9300sP&#FF8D00ow&#FF8800er"
+      - "&#FF8800Co&#FF8D00ok&#FF9300ie&#FF9900sP&#FF9300ow&#FF8D00er"
+      - "&#FF8200Co&#FF8800ok&#FF8D00ie&#FF9300sP&#FF9900ow&#FF9300er"
+      - "&#FF7C00Co&#FF8200ok&#FF8800ie&#FF8D00sP&#FF9300ow&#FF9900er"
+      - "&#FF7600Co&#FF7C00ok&#FF8200ie&#FF8800sP&#FF8D00ow&#FF9300er"
+      - "&#FF7000Co&#FF7600ok&#FF7C00ie&#FF8200sP&#FF8800ow&#FF8D00er"
+      - "&#FF6A00Co&#FF7000ok&#FF7600ie&#FF7C00sP&#FF8200ow&#FF8800er"
+      - "&#FF6500Co&#FF6A00ok&#FF7000ie&#FF7600sP&#FF7C00ow&#FF8200er"
+      - "&#FF5F00Co&#FF6500ok&#FF6A00ie&#FF7000sP&#FF7600ow&#FF7C00er"
+      - "&#FF5900Co&#FF5F00ok&#FF6500ie&#FF6A00sP&#FF7000ow&#FF7600er"
+      - "&#FF5F00Co&#FF5900ok&#FF5F00ie&#FF6500sP&#FF6A00ow&#FF7000er"
+      - "&#FF6500Co&#FF5F00ok&#FF5900ie&#FF5F00sP&#FF6500ow&#FF6A00er"
+      - "&#FF6A00Co&#FF6500ok&#FF5F00ie&#FF5900sP&#FF5F00ow&#FF6500er"
+      - "&#FF7000Co&#FF6A00ok&#FF6500ie&#FF5F00sP&#FF5900ow&#FF5F00er"
+      - "&#FF7600Co&#FF7000ok&#FF6A00ie&#FF6500sP&#FF5F00ow&#FF5900er"
+      - "&#FF7C00Co&#FF7600ok&#FF7000ie&#FF6A00sP&#FF6500ow&#FF5F00er"
+      - "&#FF8200Co&#FF7C00ok&#FF7600ie&#FF7000sP&#FF6A00ow&#FF6500er"
+      - "&#FF8800Co&#FF8200ok&#FF7C00ie&#FF7600sP&#FF7000ow&#FF6A00er"
+      - "&#FF8D00Co&#FF8800ok&#FF8200ie&#FF7C00sP&#FF7600ow&#FF7000er"
+      - "&#FF9300Co&#FF8D00ok&#FF8800ie&#FF8200sP&#FF7C00ow&#FF7600er"
+  world:
+    change-interval: 1s
+    texts:
+      - "#57C057You in world"
+      - "#5DC45DYou in world"
+      - "#64C964You in world"
+      - "#6BCE6BYou in world"
+      - "#71D271You in world"
+      - "#78D778You in world"
+      - "#7EDB7EYou in world"
+      - "#85E085You in world"
+      - "#8CE58CYou in world"
+      - "#92E992You in world"
+      - "#99EE99You in world"
+      - "#92E992You in world"
+      - "#8CE58CYou in world"
+      - "#85E085You in world"
+      - "#7EDB7EYou in world"
+      - "#78D778You in world"
+      - "#71D271You in world"
+      - "#6BCE6BYou in world"
+      - "#64C964You in world"
+      - "#5DC45DYou in world"
+      - "#57C057You in world"
+      - "#50BB50You in world"
+  nether:
+    change-interval: 1s
+    texts:
+      - "#BF5757You in nether"
+      - "#C45E5EYou in nether"
+      - "#C86565You in nether"
+      - "#CC6C6CYou in nether"
+      - "#D07373You in nether"
+      - "#D57A7AYou in nether"
+      - "#D98080You in nether"
+      - "#DD8787You in nether"
+      - "#E18E8EYou in nether"
+      - "#E69595You in nether"
+      - "#EA9C9CYou in nether"
+      - "#EEA3A3You in nether"
+      - "#EA9C9CYou in nether"
+      - "#E69595You in nether"
+      - "#E18E8EYou in nether"
+      - "#DD8787You in nether"
+      - "#D98080You in nether"
+      - "#D57A7AYou in nether"
+      - "#D07373You in nether"
+      - "#CC6C6CYou in nether"
+      - "#C86565You in nether"
+      - "#C45E5EYou in nether"
+      - "#BF5757You in nether"
+      - "#BB5050You in nether"
+  end:
+    change-interval: 1s
+    texts:
+      - "#BF3DEFYou in nether"
+      - "#C447F1You in nether"
+      - "#C851F2You in nether"
+      - "#CC5BF4You in nether"
+      - "#D065F5You in nether"
+      - "#D56FF7You in nether"
+      - "#D978F8You in nether"
+      - "#DD82F9You in nether"
+      - "#E18CFBYou in nether"
+      - "#E696FCYou in nether"
+      - "#EAA0FEYou in nether"
+      - "#EEAAFFYou in nether"
+      - "#EAA0FEYou in nether"
+      - "#E696FCYou in nether"
+      - "#E18CFBYou in nether"
+      - "#DD82F9You in nether"
+      - "#D978F8You in nether"
+      - "#D56FF7You in nether"
+      - "#D065F5You in nether"
+      - "#CC5BF4You in nether"
+      - "#C851F2You in nether"
+      - "#C447F1You in nether"
+      - "#BF3DEFYou in nether"
+      - "#BB33EEYou in nether"
+  world2:
+    change-interval: 1s
+    texts:
+      - "#FF3C7BYou in world2"
+      - "#FF4480You in world2"
+      - "#FF4D84You in world2"
+      - "#FF5588You in world2"
+      - "#FF5E8CYou in world2"
+      - "#FF6691You in world2"
+      - "#FF6F95You in world2"
+      - "#FF7799You in world2"
+      - "#FF809DYou in world2"
+      - "#FF88A2You in world2"
+      - "#FF91A6You in world2"
+      - "#FF99AAYou in world2"
+      - "#FF91A6You in world2"
+      - "#FF88A2You in world2"
+      - "#FF809DYou in world2"
+      - "#FF7799You in world2"
+      - "#FF6F95You in world2"
+      - "#FF6691You in world2"
+      - "#FF5E8CYou in world2"
+      - "#FF5588You in world2"
+      - "#FF4D84You in world2"
+      - "#FF4480You in world2"
+      - "#FF3C7BYou in world2"
+      - "#FF3377You in world2"

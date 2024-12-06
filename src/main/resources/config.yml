@@ -1,0 +1,51 @@
+# Plugin language
+
+# ru - Russian language (Русский язык)
+# uk - Ukrainian language (Українська мова)
+# en - English language (English language)
+# Default: en
+lang: en
+
+# Timezone list: https://docs.oracle.com/middleware/1221/wcs/tag-ref/MISC/TimeZones.html
+# Your timezone: https://www.google.com/search?client=firefox-b-d&q=my+time+zone
+# Default: GMT+3
+timezone: GMT+3
+
+# Default: dd.MM.yy HH:mm:ss
+time-format: dd.MM.yy HH:mm:ss
+
+# Available: Vault, PlayerPoints
+# Default: Vault
+economy-type: Vault
+
+# Modules settings
+modules:
+  tablist:
+    # Enable tablist module?
+    # Default true
+    enable: true
+
+  chat:
+    # Enable chat module?
+    # Default true
+    enable: true
+
+  server-motd:
+    # Enable server-motd module?
+    # Default true
+    enable: true
+
+  server-brand:
+    # Enable server-brand module?
+    # Default true
+    enable: true
+
+  death:
+    # Enable death module?
+    # Default true
+    enable: true
+
+  advancements:
+    # Enable advancements module?
+    # Default true
+    enable: true

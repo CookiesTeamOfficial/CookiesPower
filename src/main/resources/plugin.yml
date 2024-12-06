@@ -1,0 +1,30 @@
+name: CookiesPower
+
+version: '${project.version}'
+
+main: arkadarktime.CookiesPower
+
+api-version: '1.19'
+
+softdepend:
+  - ProtocolLib
+  - PlaceholderAPI
+  - LuckPerms
+  - Essentials
+  - PlayerPoints
+  - Vault
+
+authors: [ ArkaDarkTime ]
+
+description: Powerful and flexible plugin for everything!
+
+commands:
+  cookiespower:
+    description: Main plugin command
+
+permissions:
+  cookiespower.commands.reload:
+    description: Allow to reload plugin command
+
+  cookiespower.commands.help:
+    description: Allow to help plugin command

@@ -1,0 +1,107 @@
+# Plugin prefix
+# Default "&7[&#FF9900Co&#FF8C00ok&#FF7F00ie&#FF7300sP&#FF6600ow&#FF5900er&7] &r"
+prefix: "&7[&#FF9900Co&#FF8C00ok&#FF7F00ie&#FF7300sP&#FF6600ow&#FF5900er&7]&r" # CookiesPower - colored gradient
+
+commands:
+  no-permission: "&rУ вас недостаточно прав для этого! &7(%perm%)"
+  player-not-found: "&rИгрок &a%player% &rне найден"
+
+  reload:
+    success: "%plugin-prefix% &2Конфигурация перезагружена"
+
+  help:
+    - "&r"
+    - "&a/%cmd% &7reload &f- Перезагружает конфигурацию"
+    - "   Право - &ecookiespower.commands.reload"
+    - "&r"
+    - "&a/%cmd% &7help &f- Отправляет это сообщение"
+    - "   Право - &ecookiespower.commands.help"
+    - "&r"
+
+url:
+  message: "&e%url%&r"
+  hover: "Нажми чтобы открыть"
+
+death:
+  visible: true
+
+  entity:
+    hover:
+      player:
+        message: "%name>\n<uuid>"
+      entity:
+        message: "%name>\nТип: <type>\n<uuid>"
+
+  due-to: "&rблагодаря &a%killer%"
+  by-item: "&rс помощью &a[%item%]"
+
+  natural:
+    contact: "&a%player% &rисколот до смерти %due_to%"
+    entity_sweep_attack: "&a%player% &rсбит с ног %due_to%"
+    projectile: "&a%player% &rзастрелен &a%projectile% %due_to%"
+    suffocation: "&a%player% &rзакопан заживо %due_to%"
+    fall: "&a%player% &rнаучился летать, но не приземляться %due_to%"
+    fire: "&a%player% &rумер в огне %due_to%"
+    fire_tick: "&a%player% &rсгорел заживо %due_to%"
+    melting: "&a%player% &rрасплавился %due_to%"
+    lava: "&a%player% &rподумал что лава это джакузи %due_to%"
+    drowning: "&a%player% &rзабыл, что воздух нужен для жизни %due_to%"
+    entity_explosion: "&a%player% &rбыл взорван &a%due_to%"
+    void: "&a%player% &rвыпал из мира %due_to%"
+    lightning: "&a%player% &rполучил удар молнии, но умнее не стал %due_to%"
+    suicide: "&a%player% &rпокончил с собой %due_to%"
+    starvation: "&a%player% &rумер от голода %due_to%"
+    poison: "&a%player% &rотравился %due_to%"
+    magic: "&a%player% &rумер от магии %due_to%"
+    wither: "&a%player% &rиссушён %due_to%"
+    falling_block: "&a%player% &rраздавлен падающим блоком %due_to%"
+    thorns: "&a%player% &rбыл убит шипами %due_to%"
+    dragon_breath: "&a%player% &rиспарился в драконьем дыхании %due_to%"
+    custom: "&a%player% &rумер по неизвестным причинам %due_to%"
+    fly_into_wall: "&a%player% &rпреобразовал кинетическую энергию во внутреннюю %due_to%"
+    hot_floor: "&a%player% &rобнаружил, что пол — это лава %due_to%"
+    cramming: "&a%player% &rрасплющен в лепёшку %due_to%"
+    freeze: "&a%player% &rзамёрз насмерть %due_to%"
+    sonic_boom: "&a%player% &rбыл уничтожен звуковым зарядом %due_to%"
+    kill: "&a%player% &rбыл убит %due_to%"
+  mob:
+    default: "&a%player% &rбыл убит &a%killer% %due_to%"
+    player: "&a%player% &rбыл убит игроком &a%killer% %by_item%"
+    zombie: "&a%player% &rбыл съеден &a%killer% %due_to%"
+
+advancement:
+  task:
+    visible: true
+    text: "&#4eff52🌠 &a%player% &fполучил достижение &#4eff52[%name%]"
+    hover: "&#4eff52%name% \n%description%"
+  goal:
+    visible: true
+    text: "&#f2d40f🌠 &a%player% &fвыполнил цель &#f2d40f[%name%]"
+    hover: "&#f2d40f%name% \n%description%"
+  challenge:
+    visible: true
+    text: "&#834eff🌠 &a%player% &fзавершил испытание &#834eff[%name%]"
+    hover: "&#834eff%name% \n%description%"
+
+server-brand:
+  random: false
+  texts:
+    - "&#ff9900CookiesPower"
+    - "&#ffa13aCookiesPower"
+    - "&#9b1a6dCookiesPower"
+    - "&#da1ba9CookiesPower"
+    - "&#1b8a8dCookiesPower"
+
+server-motd:
+  random: true
+  texts:
+    - "%anim:your-server% \n&rКрутой сервер!"
+    - "%anim:your-server% \n&rЗаходи!"
+    - "%anim:your-server% \n&rИграем вместе!"
+    - "%anim:your-server% \n&rФантазия закончилась("
+    - "%anim:your-server% \n&r:D"
+
+  server-full:
+    random: false
+    texts:
+      - "%anim:your-server% \n&eСервер заполнен! Попробуй зайти чуть поже!"
