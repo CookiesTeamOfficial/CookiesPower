@@ -1,14 +1,21 @@
 # Plugin prefix
 # Default "&7[&#FF9900Co&#FF8C00ok&#FF7F00ie&#FF7300sP&#FF6600ow&#FF5900er&7] &r"
-prefix: "&7[&#FF9900Co&#FF8C00ok&#FF7F00ie&#FF7300sP&#FF6600ow&#FF5900er&7]&r" # CookiesPower - colored gradient
+# Plugin prefix with gradient
+prefix: "&7[&#FF9900Co&#FF8C00ok&#FF7F00ie&#FF7300sP&#FF6600ow&#FF5900er&7]&r" # [CookiesPower]
 
+# Commands strings
 commands:
+  # Message when player doesn't have permission
   no-permission: "&rУ вас недостаточно прав для этого! &7(%perm%)"
+  # Message when player not found
   player-not-found: "&rИгрок &a%player% &rне найден"
 
+  # Reload command messages
   reload:
+    # Success message
     success: "%plugin-prefix% &2Конфигурация перезагружена"
 
+  # Help command a message
   help:
     - "&r"
     - "&a/%cmd% &7reload &f- Перезагружает конфигурацию"
@@ -18,19 +25,24 @@ commands:
     - "   Право - &ecookiespower.commands.help"
     - "&r"
 
+# Url strings
 url:
+  # Text to replace url
   message: "&e%url%&r"
+  # Text hover
   hover: "Нажми чтобы открыть"
 
+# Death strings
 death:
+  # Disable death message
   visible: true
 
-  entity:
-    hover:
-      player:
-        message: "%name>\n<uuid>"
-      entity:
-        message: "%name>\nТип: <type>\n<uuid>"
+  # Text hover for entity death
+  hover:
+    player:
+      message: "%name>\n<uuid>"
+    entity:
+      message: "%name>\nТип: <type>\n<uuid>"
 
   due-to: "&rблагодаря &a%killer%"
   by-item: "&rс помощью &a[%item%]"
@@ -69,6 +81,7 @@ death:
     player: "&a%player% &rбыл убит игроком &a%killer% %by_item%"
     zombie: "&a%player% &rбыл съеден &a%killer% %due_to%"
 
+# Advancement strings
 advancement:
   task:
     visible: true
@@ -83,6 +96,7 @@ advancement:
     text: "&#834eff🌠 &a%player% &fзавершил испытание &#834eff[%name%]"
     hover: "&#834eff%name% \n%description%"
 
+# Server brand strings
 server-brand:
   random: false
   texts:
@@ -92,6 +106,7 @@ server-brand:
     - "&#da1ba9CookiesPower"
     - "&#1b8a8dCookiesPower"
 
+# Server motd strings
 server-motd:
   random: true
   texts:

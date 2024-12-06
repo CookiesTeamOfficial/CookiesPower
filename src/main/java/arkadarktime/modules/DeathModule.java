@@ -89,14 +89,14 @@ public class DeathModule implements ModuleListener {
         CookiesComponentBuilder componentBuilder = new CookiesComponentBuilder(deathMessage);
 
         TextComponent deadPlayerComponent = new TextComponent(player.getDisplayName());
-        String deadPlayerHover = replacePlaceholders(player, player.getDisplayName(), langFileManager.getColoredString(player, "death.entity.hover.player.message"));
+        String deadPlayerHover = replacePlaceholders(player, player.getDisplayName(), langFileManager.getColoredString(player, "death.hover.player.message"));
         deadPlayerComponent.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new Text(deadPlayerHover)));
         deadPlayerComponent.setColor(ChatColor.getByChar(deathMessage.charAt(1)));
         componentBuilder.replace("%player%", deadPlayerComponent);
 
         if (nEvent.getDamager() instanceof LivingEntity entityKiller) {
             String entityHoverType = entityKiller instanceof Player ? "player" : "entity";
-            String entityHover = replacePlaceholders(entityKiller, killerName, langFileManager.getColoredString(player, "death.entity.hover." + entityHoverType + ".message"));
+            String entityHover = replacePlaceholders(entityKiller, killerName, langFileManager.getColoredString(player, "death.hover." + entityHoverType + ".message"));
             TextComponent entityComponent = new TextComponent(killerName);
             entityComponent.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new Text(entityHover)));
             entityComponent.setColor(ChatColor.getByChar(deathMessage.charAt(1)));
