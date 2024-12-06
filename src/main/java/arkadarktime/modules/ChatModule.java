@@ -50,7 +50,6 @@ public class ChatModule implements ModuleListener, BukkitConsole {
 
         CookiesComponentBuilder builder = new CookiesComponentBuilder(formattedMessage).replace("%message%", message).replace("%displayname%", createPlayerComponent(cookiesPlayer, true)).replace("%name%", createPlayerComponent(cookiesPlayer, false)).replace("%ping%", String.valueOf(cookiesPlayer.getPing())).replace("%world%", cookiesPlayer.getPlayer().getWorld().getName());
 
-
         BaseComponent[] finalMessage = processUrls(builder.build(), chatFileManager, cookiesPlayer);
 
         event.setCancelled(true);
