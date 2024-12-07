@@ -12,7 +12,6 @@ import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
-import java.awt.*;
 import java.util.Collections;
 import java.util.List;
 import java.util.regex.Matcher;
@@ -21,32 +20,52 @@ import java.util.stream.Collectors;
 
 public class FileManager extends FileConfiguration implements BukkitConsole {
     private final CookiesPower plugin;
-    private static final Pattern HEX_PATTERN = Pattern.compile("(?i)([#&§])?#([a-fA-F0-9]{6})");
-    private static final Pattern GRADIENT_PATTERN = Pattern.compile("<" + HEX_PATTERN.pattern() + ">(.*?)<" + HEX_PATTERN.pattern() + ">");
-    private static final char COLOR_CHAR = '§';
     private final FileConfiguration fileConfiguration;
+    // Паттерны для HEX и градиентов
+    private static final Pattern HEX_PATTERN = Pattern.compile("(#|&#|§#)([0-9A-Fa-f]{6})");
+    private static final Pattern GRADIENT_PATTERN = Pattern.compile("(<gradient:)(#|&#|§#)([0-9A-Fa-f]{6})(>)(.*?)(</#|&#|§#)([0-9A-Fa-f]{6})(>)", Pattern.CASE_INSENSITIVE);
 
     public FileManager(CookiesPower plugin, FileConfiguration fileConfiguration) {
         this.plugin = plugin;
         this.fileConfiguration = fileConfiguration;
     }
 
-    // Получение значения типа int из конфигурации по ключу
+    /**
+     * Получает значение типа int из конфигурации по ключу.
+     *
+     * @param key ключ конфигурации
+     * @return значение типа int или 0, если ключ не найден
+     */
     public int getInt(@NotNull String key) {
         return isFileConfigurationNotNull() && fileConfiguration.contains(key) ? fileConfiguration.getInt(key) : 0;
     }
 
-    // Получение значения типа double из конфигурации по ключу
+    /**
+     * Получает значение типа double из конфигурации по ключу.
+     *
+     * @param key ключ конфигурации
+     * @return значение типа double или 0.0, если ключ не найден
+     */
     public double getDouble(@NotNull String key) {
         return isFileConfigurationNotNull() && fileConfiguration.contains(key) ? fileConfiguration.getDouble(key) : 0.0;
     }
 
-    // Получение значения типа boolean из конфигурации по ключу
+    /**
+     * Получает значение типа boolean из конфигурации по ключу.
+     *
+     * @param key ключ конфигурации
+     * @return значение типа boolean или false, если ключ не найден
+     */
     public boolean getBoolean(@NotNull String key) {
         return isFileConfigurationNotNull() && fileConfiguration.contains(key) && fileConfiguration.getBoolean(key);
     }
 
-    // Получение строки из конфигурации по ключу, обработка листов сообщений
+    /**
+     * Получает строку из конфигурации по ключу, обработав её для отображения в виде списка строк с переносами.
+     *
+     * @param key ключ конфигурации
+     * @return строка из конфигурации или "null", если ключ не найден или недействителен
+     */
     public String getString(@NotNull String key) {
         if (isFileConfigurationNotNull() && fileConfiguration.contains(key)) {
             Object message = fileConfiguration.get(key);
@@ -63,7 +82,13 @@ public class FileManager extends FileConfiguration implements BukkitConsole {
         return "null";
     }
 
-    // Получение списка строк с цветами и плейсхолдерами для игрока
+    /**
+     * Получает список строк с цветами и плейсхолдерами для игрока из конфигурации.
+     *
+     * @param cookiesPlayer игрок
+     * @param key           ключ конфигурации
+     * @return список строк с цветами и плейсхолдерами
+     */
     public List<String> getColoredStringList(CookiesPlayer cookiesPlayer, String key) {
         if (isFileConfigurationNotNull() && fileConfiguration.contains(key)) {
             Object message = fileConfiguration.get(key);
@@ -81,18 +106,37 @@ public class FileManager extends FileConfiguration implements BukkitConsole {
         return Collections.emptyList();
     }
 
-    // Получение строки с цветами и плейсхолдерами для отправителя
+    /**
+     * Получает строку с цветами и плейсхолдерами для отправителя.
+     *
+     * @param sender отправитель команды
+     * @param key    ключ конфигурации
+     * @return строка с цветами и плейсхолдерами для отправителя
+     */
     public String getColoredString(CommandSender sender, String key) {
         CookiesPlayer cookiesPlayerOrNull = getCookiesPlayerOrNull(sender);
         return getColoredString(cookiesPlayerOrNull, key);
     }
 
-    // Получение строки с цветами и плейсхолдерами для игрока
+    /**
+     * Получает строку с цветами и плейсхолдерами для игрока.
+     *
+     * @param cookiesPlayer игрок
+     * @param key           ключ конфигурации
+     * @return строка с цветами и плейсхолдерами для игрока
+     */
     public String getColoredString(CookiesPlayer cookiesPlayer, String key) {
         return getColoredString(cookiesPlayer, key, true);
     }
 
-    // Получение строки с цветами и плейсхолдерами для игрока, с возможностью анимации
+    /**
+     * Получает строку с цветами и плейсхолдерами для игрока с возможностью анимации.
+     *
+     * @param cookiesPlayer игрок
+     * @param key           ключ конфигурации
+     * @param animations    флаг для анимации
+     * @return строка с цветами и плейсхолдерами, возможно с анимацией
+     */
     public String getColoredString(CookiesPlayer cookiesPlayer, String key, boolean animations) {
         if (isFileConfigurationNotNull() && fileConfiguration.contains(key)) {
             Object message = fileConfiguration.get(key);
@@ -106,7 +150,12 @@ public class FileManager extends FileConfiguration implements BukkitConsole {
         return "null";
     }
 
-    // Получение секции конфигурации по ключу
+    /**
+     * Получает секцию конфигурации по ключу.
+     *
+     * @param key ключ конфигурации
+     * @return секция конфигурации или null, если ключ не найден
+     */
     public ConfigurationSection getConfigurationSection(@NotNull String key) {
         if (isFileConfigurationNotNull() && fileConfiguration.contains(key)) {
             Object section = fileConfiguration.get(key);
@@ -120,10 +169,21 @@ public class FileManager extends FileConfiguration implements BukkitConsole {
         return null;
     }
 
-    // Применение цветов и плейсхолдеров к строке с возможностью анимации
+    /**
+     * Применяет цвета и плейсхолдеры к строке с возможностью анимации.
+     *
+     * @param cookiesPlayer игрок
+     * @param message       строка для обработки
+     * @param animations    флаг для анимации
+     * @return обработанная строка
+     */
     public String applyColorsAndPlaceholders(CookiesPlayer cookiesPlayer, String message, boolean animations) {
-        if (message == null) {
-            return "";
+        message = applyGradient(message);
+        message = convertHexColors(message);
+
+        String prefix = plugin.getLangFile().getString("prefix");
+        if (prefix != null) {
+            message = message.replace("%plugin-prefix%", prefix);
         }
 
         if (plugin.placeholderApiHooked) {
@@ -131,91 +191,147 @@ public class FileManager extends FileConfiguration implements BukkitConsole {
             message = PlaceholderAPI.setPlaceholders(player, message);
         }
 
-        String prefix = plugin.getLangFile().getString("prefix");
-        if (prefix != null) {
-            message = message.replace("%plugin-prefix%", prefix);
-        }
-
         if (animations) {
             message = plugin.getAnimationsManager().replaceAnimations(message);
         }
 
-        message = applyHexAndGradient(message);
+        return message;
+    }
 
+    /**
+     * Преобразует строку с HEX цветами в формат, поддерживаемый Bukkit.
+     *
+     * @param message строка с HEX цветами
+     * @return строка с преобразованными цветами
+     */
+    private String convertHexColors(String message) {
+        Matcher matcher = HEX_PATTERN.matcher(message);
+        while (matcher.find()) {
+            String hexCode = matcher.group(2);
+            try {
+                String color = ChatColor.of("#" + hexCode).toString();
+                message = message.replace(matcher.group(0), color);
+            } catch ( IllegalArgumentException e ) {
+                Console(ConsoleType.ERROR, "Invalid HEX color code: \"" + hexCode + "\"");
+            }
+        }
         return ChatColor.translateAlternateColorCodes('&', message);
     }
 
-    // Применение HEX цветов и градиентов к строке
-    private String applyHexAndGradient(String message) {
-        Matcher gradientMatcher = GRADIENT_PATTERN.matcher(message);
-        StringBuilder buffer = new StringBuilder(message.length() + 4 * 8);
-        while (gradientMatcher.find()) {
-            String startColor = gradientMatcher.group(2);
-            String content = gradientMatcher.group(3);
-            String endColor = gradientMatcher.group(5);
+    /**
+     * Применяет градиентные цвета к строке.
+     *
+     * @param message строка с градиентом
+     * @return строка с применённым градиентом
+     */
+    private String applyGradient(String message) {
+        Matcher matcher = GRADIENT_PATTERN.matcher(message);
 
-            String gradientPart = createGradient(startColor, endColor, content);
-            gradientMatcher.appendReplacement(buffer, gradientPart);
+        while (matcher.find()) {
+            String startColorHex = matcher.group(3);
+            String endColorHex = matcher.group(7);
+            String gradientText = matcher.group(5);
+
+            if (isInvalidHexColor("#" + startColorHex) || isInvalidHexColor("#" + endColorHex)) {
+                Console(ConsoleType.ERROR, "Invalid HEX color format: \"" + startColorHex + "\" or \"" + endColorHex + "\"");
+                continue;
+            }
+
+            String gradient = createGradient(gradientText, startColorHex, endColorHex);
+            message = message.replace(matcher.group(0), gradient);
         }
-        gradientMatcher.appendTail(buffer);
-
-        StringBuilder finalMessage = getStringBuilder(buffer);
-
-        return ChatColor.translateAlternateColorCodes('&', finalMessage.toString());
+        return message;
     }
 
-    // Создание строки с градиентом
-    private static @NotNull StringBuilder getStringBuilder(StringBuilder buffer) {
-        Matcher hexMatcher = HEX_PATTERN.matcher(buffer.toString());
-        StringBuilder finalMessage = new StringBuilder(buffer.length() + 4 * 8);
-        while (hexMatcher.find()) {
-            String hexCode = hexMatcher.group(2);
-            hexMatcher.appendReplacement(finalMessage, COLOR_CHAR + "x" + COLOR_CHAR + hexCode.charAt(0) + COLOR_CHAR + hexCode.charAt(1) + COLOR_CHAR + hexCode.charAt(2) + COLOR_CHAR + hexCode.charAt(3) + COLOR_CHAR + hexCode.charAt(4) + COLOR_CHAR + hexCode.charAt(5));
+    /**
+     * Создаёт градиентный текст из строки.
+     *
+     * @param text       текст для градиента
+     * @param startColor начальный цвет
+     * @param endColor   конечный цвет
+     * @return строка с градиентом
+     */
+    private String createGradient(String text, String startColor, String endColor) {
+        StringBuilder gradientText = new StringBuilder();
+        int textLength = text.length();
+
+        for (int i = 0; i < textLength; i++) {
+            String color = blendColors(startColor, endColor, i, textLength);
+            gradientText.append(color).append(text.charAt(i));
         }
-        hexMatcher.appendTail(finalMessage);
-        return finalMessage;
+
+        return gradientText.toString();
     }
 
-    // Создание градиента от одного цвета к другому
-    public String createGradient(String startColor, String endColor, String content) {
-        StringBuilder gradient = new StringBuilder();
-        int contentLength = content.length();
+    /**
+     * Смешивает два цвета на основе индекса и общего количества символов.
+     *
+     * @param startColor  начальный цвет
+     * @param endColor    конечный цвет
+     * @param index       текущий индекс символа
+     * @param totalLength общая длина текста
+     * @return смешанный цвет
+     */
+    private String blendColors(String startColor, String endColor, int index, int totalLength) {
+        if (isInvalidHexColor("#" + startColor) || isInvalidHexColor("#" + endColor)) {
+            Console(ConsoleType.ERROR, "Invalid HEX color format: \"" + startColor + "\" or \"" + endColor + "\"");
+            return startColor;
+        }
+
+        float ratio = (float) index / totalLength;
         int startRed = Integer.parseInt(startColor.substring(0, 2), 16);
         int startGreen = Integer.parseInt(startColor.substring(2, 4), 16);
         int startBlue = Integer.parseInt(startColor.substring(4, 6), 16);
+
         int endRed = Integer.parseInt(endColor.substring(0, 2), 16);
         int endGreen = Integer.parseInt(endColor.substring(2, 4), 16);
         int endBlue = Integer.parseInt(endColor.substring(4, 6), 16);
 
-        for (int i = 0; i < contentLength; i++) {
-            double ratio = (double) i / (contentLength - 1);
-            int red = (int) (startRed + ratio * (endRed - startRed));
-            int green = (int) (startGreen + ratio * (endGreen - startGreen));
-            int blue = (int) (startBlue + ratio * (endBlue - startBlue));
+        int red = (int) (startRed + (endRed - startRed) * ratio);
+        int green = (int) (startGreen + (endGreen - startGreen) * ratio);
+        int blue = (int) (startBlue + (endBlue - startBlue) * ratio);
 
-            ChatColor color = ChatColor.of(new Color(red, green, blue));
-            gradient.append(color).append(content.charAt(i));
-        }
-
-        return gradient.toString();
+        return ChatColor.of(String.format("#%02X%02X%02X", red, green, blue)).toString();
     }
 
-    // Перезапись конфигурации
+    private boolean isInvalidHexColor(String color) {
+        return !color.matches("^#([0-9A-Fa-f]{6})$");
+    }
+
+    /**
+     * Перезагружает конфигурацию.
+     *
+     * @throws InvalidConfigurationException исключение, если конфигурация некорректна
+     */
     public void reload() throws InvalidConfigurationException {
         loadFromString(saveToString());
     }
 
-    // Загрузка конфигурации из строки
+    /**
+     * Загружает конфигурацию из строки.
+     *
+     * @param contents строка с конфигурацией
+     * @throws InvalidConfigurationException исключение, если конфигурация некорректна
+     */
     public void loadFromString(@NotNull String contents) throws InvalidConfigurationException {
         fileConfiguration.loadFromString(contents);
     }
 
-    // Сохранение конфигурации в строку
+    /**
+     * Сохраняет конфигурацию в строку.
+     *
+     * @return строка, представляющая конфигурацию
+     */
     public @NotNull String saveToString() {
         return fileConfiguration.saveToString();
     }
 
-    // Получение объекта CookiesPlayer для игрока или null
+    /**
+     * Получает объект CookiesPlayer для игрока или null.
+     *
+     * @param sender отправитель команды
+     * @return объект CookiesPlayer или null, если отправитель не игрок
+     */
     private CookiesPlayer getCookiesPlayerOrNull(CommandSender sender) {
         if (sender instanceof Player player) {
             return plugin.getPlayerDatabaseManager().getCookiesPlayer(player.getUniqueId());
@@ -223,6 +339,11 @@ public class FileManager extends FileConfiguration implements BukkitConsole {
         return null;
     }
 
+    /**
+     * Проверяет, не является ли конфигурация пустой.
+     *
+     * @return true, если конфигурация не пуста
+     */
     private boolean isFileConfigurationNotNull() {
         return fileConfiguration != null;
     }

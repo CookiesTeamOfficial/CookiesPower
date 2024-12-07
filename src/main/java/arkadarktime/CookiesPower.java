@@ -95,7 +95,6 @@ public final class CookiesPower extends JavaPlugin implements BukkitConsole {
     private void registerListeners() {
         getServer().getPluginManager().registerEvents(new InventoryManager(this), this);
         getServer().getPluginManager().registerEvents(new PlayerDatabaseManager(this), this);
-        getServer().getPluginManager().registerEvents(new AdvancementModule(this), this);
     }
 
     // Register commands function

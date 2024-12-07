@@ -1,21 +1,19 @@
-# Plugin prefix
-# Default "&7[&#FF9900Co&#FF8C00ok&#FF7F00ie&#FF7300sP&#FF6600ow&#FF5900er&7] &r"
-# Plugin prefix with gradient
+# Префикс плагина с градиентом
 prefix: "&7[&#FF9900Co&#FF8C00ok&#FF7F00ie&#FF7300sP&#FF6600ow&#FF5900er&7]&r" # [CookiesPower]
 
-# Commands strings
+# Сообщения команд
 commands:
-  # Message when player doesn't have permission
+  # Сообщение, когда у игрока нет разрешения
   no-permission: "&rУ вас недостаточно прав для этого! &7(%perm%)"
-  # Message when player not found
+  # Сообщение, когда игрок не найден
   player-not-found: "&rИгрок &a%player% &rне найден"
 
-  # Reload command messages
+  # Сообщения команды reload
   reload:
-    # Success message
+    # Сообщение об успехе
     success: "%plugin-prefix% &2Конфигурация перезагружена"
 
-  # Help command a message
+  # Сообщение команды help
   help:
     - "&r"
     - "&a/%cmd% &7reload &f- Перезагружает конфигурацию"
@@ -25,28 +23,21 @@ commands:
     - "   Право - &ecookiespower.commands.help"
     - "&r"
 
-# Url strings
-url:
-  # Text to replace url
-  message: "&e%url%&r"
-  # Text hover
-  hover: "Нажми чтобы открыть"
-
-# Death strings
+# Строки смерти
 death:
-  # Disable death message
+  # Сообщение о смерти видно?
   visible: true
 
-  # Text hover for entity death
   hover:
     player:
-      message: "%name>\n<uuid>"
+      message: "%name%\n%uuid%"
     entity:
-      message: "%name>\nТип: <type>\n<uuid>"
+      message: "%name%\nТип: %type%\n%uuid%"
 
   due-to: "&rблагодаря &a%killer%"
   by-item: "&rс помощью &a[%item%]"
 
+  # Сообщения о смерти
   natural:
     contact: "&a%player% &rисколот до смерти %due_to%"
     entity_sweep_attack: "&a%player% &rсбит с ног %due_to%"
@@ -76,47 +67,23 @@ death:
     freeze: "&a%player% &rзамёрз насмерть %due_to%"
     sonic_boom: "&a%player% &rбыл уничтожен звуковым зарядом %due_to%"
     kill: "&a%player% &rбыл убит %due_to%"
+  # Сообщения о смерти для сущностей отдельно
   mob:
     default: "&a%player% &rбыл убит &a%killer% %due_to%"
     player: "&a%player% &rбыл убит игроком &a%killer% %by_item%"
     zombie: "&a%player% &rбыл съеден &a%killer% %due_to%"
 
-# Advancement strings
+# Строки достижений
 advancement:
   task:
     visible: true
-    text: "&#4eff52🌠 &a%player% &fполучил достижение &#4eff52[%name%]"
+    text: "&#4eff52🌟 &a%player% &fполучил достижение &#4eff52[%name%]"
     hover: "&#4eff52%name% \n%description%"
   goal:
     visible: true
-    text: "&#f2d40f🌠 &a%player% &fвыполнил цель &#f2d40f[%name%]"
+    text: "&#f2d40f🌟 &a%player% &fвыполнил цель &#f2d40f[%name%]"
     hover: "&#f2d40f%name% \n%description%"
   challenge:
     visible: true
-    text: "&#834eff🌠 &a%player% &fзавершил испытание &#834eff[%name%]"
+    text: "&#834eff🌟 &a%player% &fзавершил испытание &#834eff[%name%]"
     hover: "&#834eff%name% \n%description%"
-
-# Server brand strings
-server-brand:
-  random: false
-  texts:
-    - "&#ff9900CookiesPower"
-    - "&#ffa13aCookiesPower"
-    - "&#9b1a6dCookiesPower"
-    - "&#da1ba9CookiesPower"
-    - "&#1b8a8dCookiesPower"
-
-# Server motd strings
-server-motd:
-  random: true
-  texts:
-    - "%anim:your-server% \n&rКрутой сервер!"
-    - "%anim:your-server% \n&rЗаходи!"
-    - "%anim:your-server% \n&rИграем вместе!"
-    - "%anim:your-server% \n&rФантазия закончилась("
-    - "%anim:your-server% \n&r:D"
-
-  server-full:
-    random: false
-    texts:
-      - "%anim:your-server% \n&eСервер заполнен! Попробуй зайти чуть поже!"

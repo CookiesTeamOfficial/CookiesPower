@@ -4,6 +4,7 @@ import arkadarktime.CookiesPower;
 import arkadarktime.enums.CookiesPlayer;
 import arkadarktime.enums.TimeUnit;
 import arkadarktime.interfaces.BukkitConsole;
+import net.md_5.bungee.api.ChatColor;
 import net.md_5.bungee.api.chat.ClickEvent;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -309,5 +310,27 @@ public class CustomUtils implements BukkitConsole {
                     break;
             }
         }
+    }
+
+    /**
+     * Returns the last color used in a string based on Minecraft's color formatting.
+     * This method checks for both standard color codes (like §f) and HEX color codes (like #FFFFFF),
+     * returning the appropriate {@link ChatColor}.
+     *
+     * @param string The string from which to extract the last color.
+     * @return The {@link ChatColor} corresponding to the last color in the string,
+     * or {@link ChatColor#WHITE} if no color is found.
+     */
+    public ChatColor getLastColor(String string) {
+        ChatColor color;
+        String lastColors = org.bukkit.ChatColor.getLastColors(string).replace("§x", "#").replace("§", "");
+        if (lastColors.matches("^#[0-9a-fA-F]{6}$")) {
+            color = ChatColor.of(lastColors);
+        } else if (lastColors.length() == 2 && lastColors.startsWith("§")) {
+            color = ChatColor.getByChar(org.bukkit.ChatColor.getLastColors(string).charAt(1));
+        } else {
+            color = ChatColor.WHITE;
+        }
+        return color;
     }
 }

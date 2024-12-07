@@ -2,13 +2,12 @@ package arkadarktime.modules;
 
 import arkadarktime.CookiesPower;
 import arkadarktime.interfaces.ModuleListener;
-import arkadarktime.utils.CookiesComponentBuilder;
+import arkadarktime.utils.CustomUtils;
 import arkadarktime.utils.FileManager;
-import arkadarktime.utils.MinecraftLangManager;
-import net.md_5.bungee.api.ChatColor;
+import arkadarktime.utils.CookiesComponentBuilder;
 import net.md_5.bungee.api.chat.BaseComponent;
 import net.md_5.bungee.api.chat.HoverEvent;
-import net.md_5.bungee.api.chat.TextComponent;
+import net.md_5.bungee.api.chat.TranslatableComponent;
 import net.md_5.bungee.api.chat.hover.content.Text;
 import org.bukkit.Bukkit;
 import org.bukkit.GameRule;
@@ -17,11 +16,15 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.player.PlayerAdvancementDoneEvent;
 
+import java.util.Arrays;
+
 public class AdvancementModule implements ModuleListener {
     private final CookiesPower plugin;
+    private final CustomUtils customUtils;
 
     public AdvancementModule(CookiesPower plugin) {
         this.plugin = plugin;
+        this.customUtils = new CustomUtils(plugin);
     }
 
     @Override
@@ -38,30 +41,32 @@ public class AdvancementModule implements ModuleListener {
         FileManager langFileManager = new FileManager(plugin, plugin.getLangFile());
         Player player = event.getPlayer();
         Advancement advancement = event.getAdvancement();
-        boolean advancementModuleEnable = plugin.getConfig().getBoolean("modules.advancements.enable");
 
-        if (advancement.getDisplay() != null && advancementModuleEnable) {
-            MinecraftLangManager minecraftLangManager = new MinecraftLangManager(plugin);
-            String advancementKey = advancement.getKey().getKey().replace("/", ".");
-            String minecraftAdvancementTitle = minecraftLangManager.getAdvancementTitle(advancementKey);
-            String minecraftAdvancementDescription = minecraftLangManager.getAdvancementDescription(advancementKey);
-
+        if (advancement.getDisplay() != null && advancement.getDisplay().shouldAnnounceChat()) {
             String advancementType = advancement.getDisplay().getType().toString().toLowerCase();
-            String advancementText = langFileManager.getColoredString(player, "advancement." + advancementType + ".text").replace("%player%", player.getDisplayName()).replace("%description%", minecraftAdvancementDescription.equals("Не найдено") ? advancement.getDisplay().getDescription() : minecraftAdvancementDescription);
-            String advancementHover = langFileManager.getColoredString(player, "advancement." + advancementType + ".hover").replace("%player%", player.getDisplayName()).replace("%name%", minecraftAdvancementTitle.equals("Не найдено") ? advancement.getDisplay().getTitle() : minecraftAdvancementTitle).replace("%description%", minecraftAdvancementDescription.equals("Не найдено") ? advancement.getDisplay().getDescription() : minecraftAdvancementDescription);
+            String advancementTitleKey = "advancements." + advancement.getKey().getKey().replace("/", ".") + ".title";
+            String advancementDescriptionKey = "advancements." + advancement.getKey().getKey().replace("/", ".") + ".description";
 
-            CookiesComponentBuilder componentBuilder = new CookiesComponentBuilder(advancementText);
+            TranslatableComponent advancementTitle = new TranslatableComponent(advancementTitleKey);
+            TranslatableComponent advancementDescription = new TranslatableComponent(advancementDescriptionKey);
 
-            TextComponent nameComponent = new TextComponent(minecraftAdvancementTitle);
-            nameComponent.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new Text(advancementHover)));
-            ChatColor nameColor = org.bukkit.ChatColor.getByChar(org.bukkit.ChatColor.getLastColors(advancementHover).charAt(1)).asBungee();
-            nameComponent.setColor(nameColor);
+            CookiesComponentBuilder advancementText = new CookiesComponentBuilder(langFileManager.getColoredString(player, "advancement." + advancementType + ".text"));
+            advancementText.replace("%player%", player.getDisplayName());
+            advancementText.replace("%name%", advancementTitle);
+            advancementText.replace("%description%", advancementDescription);
+            CookiesComponentBuilder advancementHover = new CookiesComponentBuilder(langFileManager.getColoredString(player, "advancement." + advancementType + ".hover"));
+            advancementHover.replace("%player%", player.getDisplayName());
+            advancementHover.replace("%name%", advancementTitle);
+            advancementHover.replace("%description%", advancementDescription);
 
-            componentBuilder.replace("%name%", nameComponent);
+            BaseComponent[] advancementHoverBuilt = advancementHover.build();
 
-            BaseComponent[] advancementMsg = componentBuilder.build();
-            plugin.getServer().spigot().broadcast(advancementMsg);
-            plugin.getServer().getConsoleSender().spigot().sendMessage(advancementMsg);
+            advancementTitle.setColor(customUtils.getLastColor(Arrays.toString(advancementHoverBuilt)));
+            advancementTitle.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new Text(advancementHoverBuilt)));
+
+            BaseComponent[] advancementTextBuilt = advancementText.build();
+            plugin.getServer().spigot().broadcast(advancementTextBuilt);
+            plugin.getServer().getConsoleSender().spigot().sendMessage(advancementTextBuilt);
         }
     }
 }

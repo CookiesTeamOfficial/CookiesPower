@@ -1,0 +1,89 @@
+# Plugin prefix with gradient
+prefix: "&7[&#FF9900Co&#FF8C00ok&#FF7F00ie&#FF7300sP&#FF6600ow&#FF5900er&7]&r" # [CookiesPower]
+
+# Commands messages
+commands:
+  # Message when player doesn't have permission
+  no-permission: "&rYou do not have permission for this! &7(%perm%)"
+  # Message when player is not found
+  player-not-found: "&rPlayer &a%player% &rnot found"
+
+  # Reload command messages
+  reload:
+    # Success message
+    success: "%plugin-prefix% &2Configuration reloaded"
+
+  # Help command messages
+  help:
+    - "&r"
+    - "&a/%cmd% &7reload &f- Reloads the configuration"
+    - "   Permission - &ecookiespower.commands.reload"
+    - "&r"
+    - "&a/%cmd% &7help &f- Sends this message"
+    - "   Permission - &ecookiespower.commands.help"
+    - "&r"
+
+# Death strings
+death:
+  # Is the death message visible?
+  visible: true
+
+  hover:
+    player:
+      message: "%name%\n%uuid%"
+    entity:
+      message: "%name%\nType: %type%\n%uuid%"
+
+  due-to: "&rby &a%killer%"
+  by-item: "&rwith &a[%item%]"
+
+  # Death messages
+  natural:
+    contact: "&a%player% &rwas smashed to death %due_to%"
+    entity_sweep_attack: "&a%player% &rwas knocked down %due_to%"
+    projectile: "&a%player% &rwas shot with &a%projectile% %due_to%"
+    suffocation: "&a%player% &rwas buried alive %due_to%"
+    fall: "&a%player% &rlearned to fly, but not how to land %due_to%"
+    fire: "&a%player% &rdied in fire %due_to%"
+    fire_tick: "&a%player% &rburned alive %due_to%"
+    melting: "&a%player% &rmelted %due_to%"
+    lava: "&a%player% &rthought lava was a jacuzzi %due_to%"
+    drowning: "&a%player% &rforgot air is needed to live %due_to%"
+    entity_explosion: "&a%player% &rwas blown up by &a%due_to%"
+    void: "&a%player% &rfell into the void %due_to%"
+    lightning: "&a%player% &rwas struck by lightning but didn't get smarter %due_to%"
+    suicide: "&a%player% &rended their life %due_to%"
+    starvation: "&a%player% &rdied from starvation %due_to%"
+    poison: "&a%player% &rpoisoned themselves %due_to%"
+    magic: "&a%player% &rdied from magic %due_to%"
+    wither: "&a%player% &rwas withered %due_to%"
+    falling_block: "&a%player% &rwas crushed by a falling block %due_to%"
+    thorns: "&a%player% &rwas killed by thorns %due_to%"
+    dragon_breath: "&a%player% &revaporated in dragon breath %due_to%"
+    custom: "&a%player% &rdied for unknown reasons %due_to%"
+    fly_into_wall: "&a%player% &rconverted kinetic energy into internal damage %due_to%"
+    hot_floor: "&a%player% &rfound out the floor is lava %due_to%"
+    cramming: "&a%player% &rwas squashed flat %due_to%"
+    freeze: "&a%player% &rfroze to death %due_to%"
+    sonic_boom: "&a%player% &rwas destroyed by a sonic boom %due_to%"
+    kill: "&a%player% &rwas killed %due_to%"
+  # Death messages for entities separately
+  mob:
+    default: "&a%player% &rwas killed by &a%killer% %due_to%"
+    player: "&a%player% &rwas killed by player &a%killer% %by_item%"
+    zombie: "&a%player% &rwas eaten by &a%killer% %due_to%"
+
+# Advancement strings
+advancement:
+  task:
+    visible: true
+    text: "&#4eff52🌟 &a%player% &fearned achievement &#4eff52[%name%]"
+    hover: "&#4eff52%name% \n%description%"
+  goal:
+    visible: true
+    text: "&#f2d40f🌟 &a%player% &fcompleted goal &#f2d40f[%name%]"
+    hover: "&#f2d40f%name% \n%description%"
+  challenge:
+    visible: true
+    text: "&#834eff🌟 &a%player% &ffinished challenge &#834eff[%name%]"
+    hover: "&#834eff%name% \n%description%"

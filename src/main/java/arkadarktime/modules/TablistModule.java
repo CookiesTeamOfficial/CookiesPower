@@ -7,9 +7,6 @@ import arkadarktime.interfaces.BukkitConsole;
 import arkadarktime.interfaces.ModuleTicker;
 import arkadarktime.utils.CustomUtils;
 import arkadarktime.utils.FileManager;
-import com.comphenix.protocol.PacketType;
-import com.comphenix.protocol.events.PacketContainer;
-import com.comphenix.protocol.wrappers.WrappedChatComponent;
 import org.bukkit.Bukkit;
 import org.bukkit.World;
 import org.bukkit.configuration.ConfigurationSection;
@@ -123,29 +120,6 @@ public class TablistModule implements ModuleTicker, BukkitConsole {
         String header = replacePlaceholders(cookiesPlayer, String.join("\n", headerStrings));
         String footer = replacePlaceholders(cookiesPlayer, String.join("\n", footerStrings));
 
-        if (plugin.protocolLibAPI.isClosed() || plugin.protocolLibAPI == null) {
-            cookiesPlayer.getPlayer().setPlayerListHeaderFooter(header, footer);
-            return;
-        }
-
-        PacketContainer packet = new PacketContainer(PacketType.Play.Server.PLAYER_LIST_HEADER_FOOTER);
-        WrappedChatComponent wrappedHeader = WrappedChatComponent.fromText(header);
-        WrappedChatComponent wrappedFooter = WrappedChatComponent.fromText(footer);
-
-        if (!packet.getChatComponents().getFields().isEmpty()) {
-            packet.getChatComponents().write(0, wrappedHeader);
-            packet.getChatComponents().write(1, wrappedFooter);
-        } else {
-            Console(ConsoleType.ERROR, "Can't set tablist for player " + cookiesPlayer.getDisplayName() + ", packet fields are empty! Disable tablist update", LineType.SIDE_LINES);
-            this.stop();
-            return;
-        }
-
-        try {
-            plugin.protocolLibAPI.sendServerPacket(cookiesPlayer.getPlayer(), packet);
-        } catch ( Exception e ) {
-            Console(ConsoleType.ERROR, "Error when sending server packet for tablist!", LineType.SIDE_LINES);
-            e.printStackTrace();
-        }
+        cookiesPlayer.getPlayer().setPlayerListHeaderFooter(header, footer);
     }
 }

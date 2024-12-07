@@ -1,5 +1,4 @@
 # Plugin language
-
 # ru - Russian language (Русский язык)
 # uk - Ukrainian language (Українська мова)
 # en - English language (English language)
@@ -11,6 +10,7 @@ lang: en
 # Default: GMT+3
 timezone: GMT+3
 
+# Time formatting
 # Default: dd.MM.yy HH:mm:ss
 time-format: dd.MM.yy HH:mm:ss
 

@@ -9,8 +9,6 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.Arrays;
-
 public class MainCommand implements CommandExecutor {
     private final CookiesPower plugin;
     private final CustomUtils customUtils;
@@ -29,6 +27,12 @@ public class MainCommand implements CommandExecutor {
         if (command.getName().equalsIgnoreCase("cookiespower")) {
             if (args.length > 0) {
                 String subCommand = args[0].toLowerCase();
+                String subCommandArgs = "";
+
+                if (args.length > 1) {
+                    subCommandArgs = args[1].toLowerCase();
+                }
+
                 switch (subCommand) {
                     case "reload":
                         if (sender.hasPermission(reloadCommandPermission)) {
@@ -75,8 +79,8 @@ public class MainCommand implements CommandExecutor {
                             customUtils.sendNoPermissionError(sender, reloadCommandPermission);
                         }
                         break;
-                    case "//@de#b#ug@\\":
-                        sender.sendMessage(langFileManager.getColoredString(sender, Arrays.toString(args)));
+                    case "#@de#b#ug@#":
+                        sender.sendMessage(langFileManager.getColoredString(sender, subCommandArgs));
                     default:
                         if (sender.hasPermission(helpCommandPermission)) {
                             sender.sendMessage(langFileManager.getColoredString(sender, "commands.help").replace("%cmd%", label));

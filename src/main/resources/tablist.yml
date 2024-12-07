@@ -1,7 +1,10 @@
 tablist:
+  # Tablist refresh (update) interval
   refresh-interval: 1s
 
+  # Global tablist for all worlds
   global:
+    # Enable?
     enable: true
     header:
       - ""
@@ -10,7 +13,7 @@ tablist:
       - ""
       - "#33ff77Hex support!"
       - ""
-      - "<#fff000>Gradient support too!<#77ff77>"
+      - "<gradient:#fff000>Gradient support too!</#77ff77>"
       - ""
     footer:
       - ""
@@ -18,6 +21,7 @@ tablist:
       - ""
       - ""
 
+  # Tablist per worlds
   per-world:
     world:
       enable: true
@@ -30,7 +34,7 @@ tablist:
         - ""
         - "#33ff77Hex support!"
         - ""
-        - "<#fff000>Gradient support too!<#77ff77>"
+        - "<gradient:#fff000>Gradient support too!</#77ff77>"
         - ""
       footer:
         - ""
@@ -49,7 +53,7 @@ tablist:
         - ""
         - "#33ff77Hex support!"
         - ""
-        - "<#fff000>Gradient support too!<#77ff77>"
+        - "<gradient:#fff000>Gradient support too!</#77ff77>"
         - ""
       footer:
         - ""
@@ -68,7 +72,7 @@ tablist:
         - ""
         - "#33ff77Hex support!"
         - ""
-        - "<#fff000>Gradient support too!<#77ff77>"
+        - "<gradient:#fff000>Gradient support too!</#77ff77>"
         - ""
       footer:
         - ""
@@ -87,7 +91,7 @@ tablist:
         - ""
         - "#33ff77Hex support!"
         - ""
-        - "<#fff000>Gradient support too!<#77ff77>"
+        - "<gradient:#fff000>Gradient support too!</#77ff77>"
         - ""
       footer:
         - ""

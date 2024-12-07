@@ -1,73 +1,54 @@
 # Server MOTD settings
-# Настройки MOTD для сервера
 server-motd:
   # Configuration for normal server state
-  # Конфигурация для обычного состояния сервера
   normal:
     motd:
       # Enable MOTD
-      # Включить MOTD
       enable: true
       # Use random text from the list
-      # Использовать случайный текст из списка
       random: true
       # Update MOTD when the server is pinged or based on a time interval. (true - update on ping, false - update at the specified interval (update-interval))
-      # Обновлять MOTD при пинге сервером или на основе временного интервала. (true - обновлять при пинге, false - обновлять по указаному интервалу (update-interval))
       update-when-ping: true
       # Time interval for updating the MOTD when update-when-ping is set to false
-      # Интервал времени для обновления MOTD, если update-when-ping установлен в false
       update-interval: 1s
-      # Text MOTD
-      # Текст MOTD
+      # MOTD text
       texts:
-        - "Этот сервер использует &dCookiesPower&r! \n&rПоэтому это крутой сервер!"
-        - "Этот сервер использует &aCookiesPower&r! \n&rПоэтому это крутой сервер!"
-        - "Этот сервер использует &cCookiesPower&r! \n&rПоэтому это крутой сервер!"
-        - "Этот сервер использует &4CookiesPower&r! \n&rПоэтому это крутой сервер!"
-        - "Этот сервер использует &1CookiesPower&r! \n&rПоэтому это крутой сервер!"
-        - "Этот сервер использует &9CookiesPower&r! \n&rПоэтому это крутой сервер!"
-        - "Этот сервер использует &bCookiesPower&r! \n&rПоэтому это крутой сервер!"
-        - "Этот сервер использует &2CookiesPower&r! \n&rПоэтому это крутой сервер!"
-        - "Этот сервер использует &3CookiesPower&r! \n&rПоэтому это крутой сервер!"
-        - "Этот сервер использует &cCookiesPower&r! \n&rПоэтому это крутой сервер!"
+        - "This server use &dCookiesPower&r! \n&rBecause this server cool!"
+        - "This server use &aCookiesPower&r! \n&rBecause this server cool!"
+        - "This server use &cCookiesPower&r! \n&rBecause this server cool!"
+        - "This server use &4CookiesPower&r! \n&rBecause this server cool!"
+        - "This server use &1CookiesPower&r! \n&rBecause this server cool!"
+        - "This server use &9CookiesPower&r! \n&rBecause this server cool!"
+        - "This server use &bCookiesPower&r! \n&rBecause this server cool!"
+        - "This server use &2CookiesPower&r! \n&rBecause this server cool!"
+        - "This server use &3CookiesPower&r! \n&rBecause this server cool!"
+        - "This server use &cCookiesPower&r! \n&rBecause this server cool!"
 
     # Max players settings
-    # Настройки для максимального числа игроков
     max-players:
       # Enable max players display
-      # Включить отображение максимального числа игроков
       enable: true
       # Max player count
-      # Максимальное количество игроков
       count: 100
 
     # Fake players settings
-    # Настройки для ненастоящих игроков
     fake-players:
       # Enable fake players
-      # Включить ненастоящих игроков
       enable: false
       # Fake players count (if enabled)
-      # Количество ненастоящих игроков (если включено)
       count: 31
       # Generate random names for fake players
-      # Генерировать случайные имена для ненастоящих игроков
       generate-random-names: true
 
     # Version settings
-    # Настройки для версии сервера
     version:
       # Enable version display
-      # Включить отображение версии
       enable: true
       # Use random text from the list
-      # Использовать случайный текст из списка
       random: true
       # Protocol, see - https://wiki.vg/Protocol_version_numbers | -1 means custom text
-      # Протокол, смотрите - https://wiki.vg/Protocol_version_numbers | -1 означает кастомный текст
       protocol: -1
-      # Text MOTD
-      # Текст MOTD
+      # MOTD text
       texts:
         - "&dCookiesPower"
         - "&aCookiesPower"
@@ -76,80 +57,57 @@ server-motd:
         - "&3CookiesPower"
 
   # Configuration for full server state (joined max. players)
-  # Конфигурация для состояния, когда сервер переполнен (зашло макс. количество игроков)
   server-full:
     motd:
       # Enable MOTD
-      # Включить MOTD
       enable: true
       # Use random text from the list
-      # Использовать случайный текст из списка
       random: true
       # Update MOTD when the server is pinged or based on a time interval. (true - update on ping, false - update at the specified interval (update-time))
-      # Обновлять MOTD при пинге сервером или на основе временного интервала. (true - обновлять при пинге, false - обновлять по указаному интервалу (update-time))
       update-when-ping: true
       # Time interval for updating the MOTD when update-when-ping is set to false
-      # Интервал времени для обновления MOTD, если update-when-ping установлен в false
       update-interval: 1s
-      # Text MOTD
-      # Текст MOTD
+      # MOTD text
       texts:
-        - "Этот сервер использует &3CookiesPower&r! \n&eНо сервер заполнен! Попробуй зайти чуть поже!"
+        - "This server use &3CookiesPower&r! \n&eBut server is full! Try join later!"
 
     # Max players settings
-    # Настройки для максимального числа игроков
     max-players:
       # Enable max players display
-      # Включить отображение максимального числа игроков
       enable: true
       # Max player count
-      # Максимальное количество игроков
       count: 100
 
     # Fake players settings
-    # Настройки для ненастоящих игроков
     fake-players:
       # Enable fake players
-      # Включить ненастоящих игроков
       enable: false
       # Fake players count (if enabled)
-      # Количество ненастоящих игроков (если включено)
       count: 31
       # Generate random names for fake players
-      # Генерировать случайные имена для ненастоящих игроков
       generate-random-names: true
 
     # Version settings
-    # Настройки для версии сервера
     version:
       # Enable version display
-      # Включить отображение версии
       enable: true
       # Use random text from the list
-      # Использовать случайный текст из списка
       random: true
       # Protocol, see - https://wiki.vg/Protocol_version_numbers | -1 means custom text
-      # Протокол, смотрите - https://wiki.vg/Protocol_version_numbers | -1 означает кастомный текст
       protocol: -1
-      # Text MOTD
-      # Текст MOTD
+      # MOTD text
       texts:
-        - "Сервер сейчас заполнен!"
+        - "Server currently full!"
 
 # Server brand settings
-# Настройки для названия сервера
 server-brand:
   # Enable server brand change in F3
-  # Включить изменение название сервера в F3
   enable: true
   # Use random text from the list
-  # Использовать случайный текст из списка
   random: false
   # Server brand update time
-  # Время обновления названия сервера
   update-interval: 1s
-  # Text MOTD
-  # Текст MOTD
+  # MOTD text
   texts:
     - "&dCookiesPower"
     - "&aCookiesPower"

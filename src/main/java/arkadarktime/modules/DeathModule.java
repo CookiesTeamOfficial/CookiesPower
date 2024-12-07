@@ -3,7 +3,7 @@ package arkadarktime.modules;
 import arkadarktime.CookiesPower;
 import arkadarktime.enums.CookiesPlayer;
 import arkadarktime.interfaces.ModuleListener;
-import arkadarktime.utils.CookiesComponentBuilder;
+import arkadarktime.utils.components.CookiesComponentBuilder;
 import arkadarktime.utils.FileManager;
 import arkadarktime.utils.MinecraftLangManager;
 import net.md_5.bungee.api.ChatColor;
@@ -37,7 +37,7 @@ public class DeathModule implements ModuleListener {
     public void onPlayerDeath(PlayerDeathEvent event) {
         FileManager langFileManager = new FileManager(plugin, plugin.getLangFile());
 
-        event.setDeathMessage(null);
+//        event.setDeathMessage(null);
 
         if (langFileManager.getBoolean("death.visible")) {
             BaseComponent[] deathMessage = getDeathMessage(event);
@@ -72,7 +72,7 @@ public class DeathModule implements ModuleListener {
 
             killerName = !entityKillerName.equals("Не найдено") ? entityKillerName : killerName;
 
-            if (nEvent.getDamager() instanceof LivingEntity) {
+            if (nEvent != null && nEvent.getDamager() instanceof LivingEntity) {
                 deathType = "mob";
                 if (killer != null && nEvent.getDamager() instanceof Player) {
                     cause = "player";
@@ -94,7 +94,7 @@ public class DeathModule implements ModuleListener {
         deadPlayerComponent.setColor(ChatColor.getByChar(deathMessage.charAt(1)));
         componentBuilder.replace("%player%", deadPlayerComponent);
 
-        if (nEvent.getDamager() instanceof LivingEntity entityKiller) {
+        if (nEvent != null && nEvent.getDamager() instanceof LivingEntity entityKiller) {
             String entityHoverType = entityKiller instanceof Player ? "player" : "entity";
             String entityHover = replacePlaceholders(entityKiller, killerName, langFileManager.getColoredString(player, "death.hover." + entityHoverType + ".message"));
             TextComponent entityComponent = new TextComponent(killerName);
@@ -107,7 +107,10 @@ public class DeathModule implements ModuleListener {
             Item item = new Item(itemInHand.getType().getKey().toString(), itemInHand.getAmount(), ItemTag.ofNbt(itemInHand.getItemMeta().getAsString()));
             TextComponent itemComponent = new TextComponent(new TranslatableComponent(itemInHand.getTranslationKey()));
             itemComponent.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_ITEM, item));
-            ChatColor itemColor = org.bukkit.ChatColor.getByChar(org.bukkit.ChatColor.getLastColors(deathMessage).charAt(1)).asBungee();
+
+            String lastColors = org.bukkit.ChatColor.getLastColors(deathMessage).replace("§x", "#").replace("§", "");
+            ChatColor itemColor = ChatColor.of(lastColors);
+
             itemComponent.setColor(itemColor);
             componentBuilder.replace("%item%", itemComponent);
         }
