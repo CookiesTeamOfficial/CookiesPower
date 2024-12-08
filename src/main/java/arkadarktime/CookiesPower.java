@@ -191,7 +191,7 @@ public final class CookiesPower extends JavaPlugin implements BukkitConsole {
 
     // Load file from plugin resources but in folder by lang code
     private FileConfiguration loadFileInLand(String fileName) {
-        return this.loadFile(langCode + fileName);
+        return this.loadFile(langCode + "/" + fileName);
     }
 
     // Load file from plugin resources function
