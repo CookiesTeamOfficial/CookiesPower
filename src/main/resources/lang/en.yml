@@ -1,5 +1,5 @@
 # Plugin prefix with gradient
-prefix: "&7[<gradient:&#FF9900>CookiesPower</&#FF5900>&7]&r" # [CookiesPower]
+prefix: "&7[<gradient:&#FF9900>CookiesPower<&#FF5900>&7]&r" # [CookiesPower]
 
 # Commands messages
 commands:
