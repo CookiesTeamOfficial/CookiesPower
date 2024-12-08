@@ -19,7 +19,7 @@
     </properties>
 
     <build>
-<!--        <directory>D:\Майнкрафт сервера\Test Server 1.19.4\plugins\</directory>-->
+        <!--        <directory>D:\Майнкрафт сервера\Test Server 1.19.4\plugins\</directory>-->
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -28,6 +28,19 @@
                 <configuration>
                     <source>16</source>
                     <target>16</target>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-shade-plugin</artifactId>
+                <version>3.5.3</version>
+                <configuration>
+                    <relocations>
+                        <relocation>
+                            <pattern>org.bstats</pattern>
+                            <shadedPattern>arkadarktime</shadedPattern>
+                        </relocation>
+                    </relocations>
                 </configuration>
             </plugin>
         </plugins>
