@@ -77,13 +77,13 @@ death:
 advancement:
   task:
     visible: true
-    text: "&#4eff52🌟 &a%player% &fполучил достижение &#4eff52[%name%]"
+    text: "&a%player% &fполучил достижение &#4eff52%name%"
     hover: "&#4eff52%name% \n%description%"
   goal:
     visible: true
-    text: "&#f2d40f🌟 &a%player% &fвыполнил цель &#f2d40f[%name%]"
+    text: "&a%player% &fвыполнил цель &#f2d40f%name%"
     hover: "&#f2d40f%name% \n%description%"
   challenge:
     visible: true
-    text: "&#834eff🌟 &a%player% &fзавершил испытание &#834eff[%name%]"
+    text: "&a%player% &fзавершил испытание &#834eff%name%"
     hover: "&#834eff%name% \n%description%"

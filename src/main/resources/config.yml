@@ -18,6 +18,10 @@ time-format: dd.MM.yy HH:mm:ss
 # Default: Vault
 economy-type: Vault
 
+# Enable bStats?
+# Default: true
+enable-bstats: true
+
 # Modules settings
 modules:
   tablist:
