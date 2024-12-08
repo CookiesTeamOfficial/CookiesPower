@@ -1,7 +1,7 @@
 # Plugin language
-# ru - Russian language (Русский язык)
-# uk - Ukrainian language (Українська мова)
-# en - English language (English language)
+# ru - Russian language (Русский язык) | Для перевода выберите язык ниже и удалите все файлы кроме конфига
+# uk - Ukrainian language (Українська мова) | Для перекладу виберіть мову нижче та видаліть усі файли, крім конфігу
+# en - English language (English language) | To translate, select the language below and delete all files except the config
 # Default: en
 lang: en
 

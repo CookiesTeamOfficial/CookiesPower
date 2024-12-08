@@ -13,16 +13,16 @@ server-motd:
       update-interval: 1s
       # MOTD text
       texts:
-        - "This server use &dCookiesPower&r! \n&rBecause this server cool!"
-        - "This server use &aCookiesPower&r! \n&rBecause this server cool!"
-        - "This server use &cCookiesPower&r! \n&rBecause this server cool!"
-        - "This server use &4CookiesPower&r! \n&rBecause this server cool!"
-        - "This server use &1CookiesPower&r! \n&rBecause this server cool!"
-        - "This server use &9CookiesPower&r! \n&rBecause this server cool!"
-        - "This server use &bCookiesPower&r! \n&rBecause this server cool!"
-        - "This server use &2CookiesPower&r! \n&rBecause this server cool!"
-        - "This server use &3CookiesPower&r! \n&rBecause this server cool!"
-        - "This server use &cCookiesPower&r! \n&rBecause this server cool!"
+        - "&fThis server use &dCookiesPower&r! \n&fBecause this server cool!"
+        - "&fThis server use &aCookiesPower&r! \n&fBecause this server cool!"
+        - "&fThis server use &cCookiesPower&r! \n&fBecause this server cool!"
+        - "&fThis server use &4CookiesPower&r! \n&fBecause this server cool!"
+        - "&fThis server use &1CookiesPower&r! \n&fBecause this server cool!"
+        - "&fThis server use &9CookiesPower&r! \n&fBecause this server cool!"
+        - "&fThis server use &bCookiesPower&r! \n&fBecause this server cool!"
+        - "&fThis server use &2CookiesPower&r! \n&fBecause this server cool!"
+        - "&fThis server use &3CookiesPower&r! \n&fBecause this server cool!"
+        - "&fThis server use &cCookiesPower&r! \n&fBecause this server cool!"
 
     # Max players settings
     max-players:
@@ -69,7 +69,7 @@ server-motd:
       update-interval: 1s
       # MOTD text
       texts:
-        - "This server use &3CookiesPower&r! \n&eBut server is full! Try join later!"
+        - "&fThis server use &6CookiesPower&r! \n&eBut server is full! Try join later!"
 
     # Max players settings
     max-players:
@@ -97,7 +97,7 @@ server-motd:
       protocol: -1
       # MOTD text
       texts:
-        - "Server currently full!"
+        - "&fServer currently full!"
 
 # Server brand settings
 server-brand:

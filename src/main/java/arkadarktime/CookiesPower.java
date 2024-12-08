@@ -25,14 +25,15 @@ import java.util.List;
 import java.util.UUID;
 
 public final class CookiesPower extends JavaPlugin implements BukkitConsole {
+    // Other
     public final String pluginIdentifierId = "CookiesPowerPluginByArkaDarkTime-" + UUID.randomUUID();
+    public String langCode;
     // Files
     public FileConfiguration langFileManager;
     public FileConfiguration tablistFileManager;
     public FileConfiguration chatFileManager;
     public FileConfiguration serverFileManager;
     public FileConfiguration animationsFileManager;
-
     // Managers
     private PlayerDatabaseManager playerDatabaseManager;
     private AnimationsManager animationsManager;
@@ -104,13 +105,7 @@ public final class CookiesPower extends JavaPlugin implements BukkitConsole {
 
     // Hook plugins function
     private void hookPlugins() {
-        HookPlugin[] plugins = {
-                new ProtocolLibHook(this),
-                new PlaceholderAPIHook(this),
-                new LuckPermsHook(this),
-                new VaultHook(this),
-                new PlayerPointsHook(this)
-        };
+        HookPlugin[] plugins = {new ProtocolLibHook(this), new PlaceholderAPIHook(this), new LuckPermsHook(this), new VaultHook(this), new PlayerPointsHook(this)};
         for (HookPlugin plugin : plugins) {
             plugin.hook();
         }
@@ -164,7 +159,7 @@ public final class CookiesPower extends JavaPlugin implements BukkitConsole {
 
     // Load a lang file
     public boolean loadLangFile() {
-        String langCode = getConfig().getString("lang", "en");
+        langCode = getConfig().getString("lang", "en");
         String langFile = "lang/" + langCode + ".yml";
         langFileManager = loadFile(langFile);
         return langFileManager != null;
@@ -172,26 +167,31 @@ public final class CookiesPower extends JavaPlugin implements BukkitConsole {
 
     // Load a tablist file
     public boolean loadTablistFile() {
-        tablistFileManager = loadFile("tablist.yml");
+        tablistFileManager = loadFileInLand("tablist.yml");
         return tablistFileManager != null;
     }
 
     // Load a chat file
     public boolean loadChatFile() {
-        chatFileManager = loadFile("chat.yml");
+        chatFileManager = loadFileInLand("chat.yml");
         return chatFileManager != null;
     }
 
     // Load a server file
     public boolean loadServerFile() {
-        serverFileManager = loadFile("server.yml");
+        serverFileManager = loadFileInLand("server.yml");
         return serverFileManager != null;
     }
 
     // Load an animation's file
     public boolean loadAnimationsFile() {
-        animationsFileManager = loadFile("animations.yml");
+        animationsFileManager = loadFileInLand("animations.yml");
         return animationsFileManager != null;
+    }
+
+    // Load file from plugin resources but in folder by lang code
+    private FileConfiguration loadFileInLand(String fileName) {
+        return this.loadFile(langCode + fileName);
     }
 
     // Load file from plugin resources function

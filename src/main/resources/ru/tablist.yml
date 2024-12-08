@@ -1,0 +1,100 @@
+tablist:
+  # Интервал обновления таблиста
+  refresh-interval: 1s
+
+  # Глобальный таблист для всех миров
+  global:
+    # Включен?
+    enable: true
+    header:
+      - ""
+      - ""
+      - "%anim:your-server%"
+      - ""
+      - "#33ff77Hex support!"
+      - ""
+      - "<gradient:#fff000>Gradient support too!</#77ff77>"
+      - ""
+    footer:
+      - ""
+      - "            &fᴏɴʟɪɴᴇ: #fff000%online%  &f|  ᴘɪɴɢ: #fff000%ping%            "
+      - ""
+      - ""
+
+  # Таблист для разных миров
+  per-world:
+    world:
+      enable: true
+      header:
+        - ""
+        - ""
+        - "%anim:your-server%"
+        - ""
+        - "%anim:world%"
+        - ""
+        - "#33ff77Hex support!"
+        - ""
+        - "<gradient:#fff000>Gradient support too!</#77ff77>"
+        - ""
+      footer:
+        - ""
+        - "            &fᴏɴʟɪɴᴇ: #fff000%online%  &f|  ᴘɪɴɢ: #fff000%ping%            "
+        - ""
+        - ""
+
+    world_nether:
+      enable: true
+      header:
+        - ""
+        - ""
+        - "%anim:your-server%"
+        - ""
+        - "%anim:nether%"
+        - ""
+        - "#33ff77Hex support!"
+        - ""
+        - "<gradient:#fff000>Gradient support too!</#77ff77>"
+        - ""
+      footer:
+        - ""
+        - "            &fᴏɴʟɪɴᴇ: #fff000%online%  &f|  ᴘɪɴɢ: #fff000%ping%            "
+        - ""
+        - ""
+
+    world_the_end:
+      enable: true
+      header:
+        - ""
+        - ""
+        - "%anim:your-server%"
+        - ""
+        - "%anim:end%"
+        - ""
+        - "#33ff77Hex support!"
+        - ""
+        - "<gradient:#fff000>Gradient support too!</#77ff77>"
+        - ""
+      footer:
+        - ""
+        - "            &fᴏɴʟɪɴᴇ: #fff000%online%  &f|  ᴘɪɴɢ: #fff000%ping%            "
+        - ""
+        - ""
+
+    world2:
+      enable: true
+      header:
+        - ""
+        - ""
+        - "%anim:your-server%"
+        - ""
+        - "%anim:world2%"
+        - ""
+        - "#33ff77Hex support!"
+        - ""
+        - "<gradient:#fff000>Gradient support too!</#77ff77>"
+        - ""
+      footer:
+        - ""
+        - "            &fᴏɴʟɪɴᴇ: #fff000%online%  &f|  ᴘɪɴɢ: #fff000%ping%            "
+        - ""
+        - ""

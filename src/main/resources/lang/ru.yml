@@ -1,5 +1,5 @@
 # Префикс плагина с градиентом
-prefix: "&7[&#FF9900Co&#FF8C00ok&#FF7F00ie&#FF7300sP&#FF6600ow&#FF5900er&7]&r" # [CookiesPower]
+prefix: "&7[<gradient:&#FF9900CookiesPower</&#FF5900>&7]&r" # [CookiesPower]
 
 # Сообщения команд
 commands:
