@@ -8,6 +8,7 @@ import arkadarktime.interfaces.ModuleListener;
 import arkadarktime.modules.*;
 import arkadarktime.utils.AnimationsManager;
 import arkadarktime.utils.InventoryManager;
+import arkadarktime.utils.Metrics;
 import arkadarktime.utils.database.PlayerDatabaseManager;
 import arkadarktime.utils.pluginHooks.*;
 import com.comphenix.protocol.ProtocolManager;
@@ -41,10 +42,10 @@ public final class CookiesPower extends JavaPlugin implements BukkitConsole {
     private AnimationsManager animationsManager;
     // Plugin hooks
     public boolean placeholderApiHooked = false; // Is placeholder api hooked
-    public ProtocolManager protocolLibAPI; // Manage protocols
+    public ProtocolManager protocolManager; // Manage protocols
+    public LuckPerms luckPermsAPI; // Manage permission
     public Economy vaultAPI; // Vault economy
     public PlayerPointsAPI playerPointsAPI; // PlayerPoints economy
-    public LuckPerms luckPermsAPI; // Manage permission
     // Modules
     public final TablistModule tablistModule = new TablistModule(this);
     public final DeathModule deathModule = new DeathModule(this);
@@ -71,6 +72,8 @@ public final class CookiesPower extends JavaPlugin implements BukkitConsole {
             registerCommands();
             registerListeners();
 
+            enableBStats();
+
             Console(BukkitConsole.ConsoleType.INFO, "Successful load and enable", BukkitConsole.LineType.TOP_SIDE_LINE);
             Console(BukkitConsole.ConsoleType.INFO, "Version: " + this.getDescription().getVersion(), BukkitConsole.LineType.BOTTOM_SIDE_LINE);
         } catch ( Exception e ) {
@@ -83,7 +86,7 @@ public final class CookiesPower extends JavaPlugin implements BukkitConsole {
     public void onDisable() {
         disableModules();
 
-        if (protocolLibAPI != null) protocolLibAPI.removePacketListeners(this);
+        if (protocolManager != null) protocolManager.removePacketListeners(this);
         playerDatabaseManager.disconnect();
         animationsManager.stopAnimations();
 
@@ -131,6 +134,14 @@ public final class CookiesPower extends JavaPlugin implements BukkitConsole {
         Console(BukkitConsole.ConsoleType.INFO, "", BukkitConsole.LineType.LINE);
     }
 
+    // Enable bstats function
+    public void enableBStats() {
+        if (getConfig().getBoolean("enable-bstats")) {
+            Metrics bStats = new Metrics(this, 24098);
+            bStats.addCustomChart(new Metrics.SimplePie("plugin_language", () -> getConfig().getString("lang")));
+        }
+    }
+
     // Get player database manager function
     public PlayerDatabaseManager getPlayerDatabaseManager() {
         return this.playerDatabaseManager;
@@ -152,51 +163,47 @@ public final class CookiesPower extends JavaPlugin implements BukkitConsole {
 
     // Load a config file
     public void loadConfigFile() {
-        loadFile("config.yml", null);
+        loadFile("config.yml");
     }
 
     // Load a lang file
     public boolean loadLangFile() {
         String langCode = getConfig().getString("lang", "en");
         String langFile = "lang/" + langCode + ".yml";
-        langFileManager = loadFile(langFile, null);
+        langFileManager = loadFile(langFile);
         return langFileManager != null;
     }
 
     // Load a tablist file
     public boolean loadTablistFile() {
-        tablistFileManager = loadFile("tablist.yml", null);
+        tablistFileManager = loadFile("tablist.yml");
         return tablistFileManager != null;
     }
 
     // Load a chat file
     public boolean loadChatFile() {
-        chatFileManager = loadFile("chat.yml", null);
+        chatFileManager = loadFile("chat.yml");
         return chatFileManager != null;
     }
 
     // Load a server file
     public boolean loadServerFile() {
-        serverFileManager = loadFile("server.yml", null);
+        serverFileManager = loadFile("server.yml");
         return serverFileManager != null;
     }
 
     // Load an animation's file
     public boolean loadAnimationsFile() {
-        animationsFileManager = loadFile("animations.yml", null);
+        animationsFileManager = loadFile("animations.yml");
         return animationsFileManager != null;
     }
 
     // Load file from plugin resources function
-    private FileConfiguration loadFile(String fileName, String defaultPath) {
+    private FileConfiguration loadFile(String fileName) {
         try {
             File file = new File(getDataFolder(), fileName);
             if (!file.exists()) {
-                if (defaultPath != null) {
-                    copyDefaultFile(defaultPath, file);
-                } else {
-                    saveResource(fileName, false);
-                }
+                saveResource(fileName, false);
             }
             return YamlConfiguration.loadConfiguration(file);
         } catch ( Exception e ) {
