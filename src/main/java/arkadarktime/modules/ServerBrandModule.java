@@ -8,32 +8,38 @@ import arkadarktime.interfaces.ModuleTicker;
 import arkadarktime.utils.CustomUtils;
 import arkadarktime.utils.FileManager;
 import com.comphenix.protocol.PacketType;
-import com.comphenix.protocol.events.PacketAdapter;
-import com.comphenix.protocol.events.PacketEvent;
+import com.comphenix.protocol.injector.netty.WirePacket;
+import io.netty.buffer.ByteBuf;
+import io.netty.buffer.Unpooled;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.player.PlayerJoinEvent;
-import org.bukkit.plugin.Plugin;
 
-import java.lang.reflect.Field;
+import java.lang.reflect.Constructor;
 import java.lang.reflect.Method;
 import java.util.List;
 import java.util.Random;
-import java.util.Set;
 
 public class ServerBrandModule implements ModuleTicker, BukkitConsole {
     private final CookiesPower plugin;
     private final CustomUtils customUtils;
-    private static Field playerChannelsField;
     private String channel;
     private String brand;
     private int brandIndex = 0;
     private int brandUpdateTaskId = -1;
+    private final Class<?> pdscl;
+    private boolean packetDataSerializerError = false;
+    private boolean writeStringError = false;
 
     public ServerBrandModule(CookiesPower plugin) {
         this.plugin = plugin;
         this.customUtils = new CustomUtils(plugin);
+        try {
+            this.pdscl = Class.forName("net.minecraft.network.PacketDataSerializer");
+        } catch ( ClassNotFoundException e ) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Override
@@ -54,9 +60,11 @@ public class ServerBrandModule implements ModuleTicker, BukkitConsole {
     @Override
     public void start() {
         FileManager serverFileManager = new FileManager(plugin, plugin.getServerFile());
-        updateServerBrand();
-        long updateTime = customUtils.parseTime(serverFileManager.getString("server-brand.update-interval", "1s"), TimeUnit.TICKS);
-        brandUpdateTaskId = Bukkit.getScheduler().runTaskTimerAsynchronously(plugin, this::update, 0L, updateTime).getTaskId();
+        initUpdateServerBrand();
+        if (serverFileManager.getColoredStringList(null, "server-brand.texts").size() != 1) {
+            long updateTime = customUtils.parseTime(serverFileManager.getString("server-brand.update-interval", "1s"), TimeUnit.TICKS);
+            brandUpdateTaskId = Bukkit.getScheduler().runTaskTimerAsynchronously(plugin, this::update, 0L, updateTime).getTaskId();
+        }
     }
 
     @Override
@@ -86,10 +94,10 @@ public class ServerBrandModule implements ModuleTicker, BukkitConsole {
             brandIndex = (brandIndex + 1) % brandTexts.size();
         }
 
-        Bukkit.getOnlinePlayers().forEach(this::updateBrand);
+        Bukkit.getOnlinePlayers().forEach(this::updateBrandForPlayer);
     }
 
-    public void updateServerBrand() {
+    public void initUpdateServerBrand() {
         try {
             Class.forName("org.bukkit.entity.Dolphin");
             channel = "minecraft:brand";
@@ -97,68 +105,65 @@ public class ServerBrandModule implements ModuleTicker, BukkitConsole {
             channel = "MC|Brand";
         }
 
-        try {
-            Method registerMethod = plugin.getServer().getMessenger().getClass().getDeclaredMethod("addToOutgoing", Plugin.class, String.class);
-            registerMethod.setAccessible(true);
-            registerMethod.invoke(plugin.getServer().getMessenger(), plugin, channel);
-        } catch ( ReflectiveOperationException e ) {
-            Console(ConsoleType.ERROR, "Error while attempting to register plugin message channel: " + e, LineType.SIDE_LINES);
-            throw new RuntimeException("Error while attempting to register plugin message channel: " + e);
-        }
+        plugin.getServer().getMessenger().registerOutgoingPluginChannel(plugin, channel);
 
         this.update();
     }
 
-    private void updateBrand(Player player) {
+    private void updateBrandForPlayer(Player player) {
         FileManager langFileManager = new FileManager(plugin, plugin.getLangFile());
 
         if (channel == null) {
-            Console(ConsoleType.ERROR, "Brand channel is not set.", LineType.SIDE_LINES);
             return;
         }
 
         CookiesPlayer cookiesPlayer = plugin.getPlayerDatabaseManager().getCookiesPlayer(player.getUniqueId());
         String coloredBrand = langFileManager.applyColorsAndPlaceholders(cookiesPlayer, this.brand, true);
 
-        Console("Channel: " + channel);
+        ByteBuf buf = getPacketDataSerializer();
+        if (buf == null) return;
 
-        plugin.protocolManager.addPacketListener(new PacketAdapter(plugin, PacketType.Play.Client.CUSTOM_PAYLOAD) {
-            @Override
-            public void onPacketReceiving(PacketEvent event) {
-                if (event.getPacketType() == PacketType.Play.Client.CUSTOM_PAYLOAD) {
-                    String channel2 = event.getPacket().getStrings().read(0);
-                    if (channel2.equals(channel)) { // Старый формат канала
-                        event.getPacket().getModifier().write(0, "CustomBrand"); // Здесь "CustomBrand" — твой бренд
-                    }
-                }
-            }
-        });
+        if (writeString(buf, channel) || writeString(buf, coloredBrand)) return;
 
-//        player.sendPluginMessage(plugin, channel, new PacketDataSerializer(Unpooled.buffer()).a(coloredBrand).array());
-
-//        player.sendPluginMessage(plugin, channel, new PacketSerializer(coloredBrand + ChatColor.RESET).toArray());
-    }
-
-    @EventHandler(ignoreCancelled = true)
-    public void onPlayerJoin(PlayerJoinEvent event) {
-        if (playerChannelsField == null) {
-            try {
-                playerChannelsField = event.getPlayer().getClass().getDeclaredField("channels");
-                playerChannelsField.setAccessible(true);
-            } catch ( ReflectiveOperationException e ) {
-                e.printStackTrace();
-                plugin.getServer().getPluginManager().disablePlugin(plugin);
-            }
-        }
+        byte[] data = new byte[buf.readableBytes()];
+        buf.getBytes(0, data);
 
         try {
-            Set<String> channels = (Set<String>) playerChannelsField.get(event.getPlayer());
-            channels.add(channel);
-        } catch ( ReflectiveOperationException e ) {
-            e.printStackTrace();
-            plugin.getServer().getPluginManager().disablePlugin(plugin);
+            WirePacket customPacket = new WirePacket(PacketType.Play.Server.CUSTOM_PAYLOAD, data);
+            plugin.protocolManager.sendWirePacket(player, customPacket);
+        } catch ( Throwable ignored ) {
         }
+    }
 
-        updateBrand(event.getPlayer());
+    private ByteBuf getPacketDataSerializer() {
+        try {
+            Constructor<?> pdsclConstructor = pdscl.getConstructor(ByteBuf.class);
+            return (ByteBuf) pdsclConstructor.newInstance(Unpooled.buffer());
+        } catch ( Throwable t ) {
+            if (!packetDataSerializerError) {
+                packetDataSerializerError = true;
+                Console(ConsoleType.ERROR, "Cannot create PacketDataSerializer ByteBuf: " + t.getMessage());
+            }
+            return null;
+        }
+    }
+
+    private boolean writeString(Object buf, String data) {
+        try {
+            Method writeString = pdscl.getDeclaredMethod("a", String.class);
+            writeString.invoke(buf, data);
+            return false; // Success
+        } catch ( Throwable t ) {
+            if (!writeStringError) {
+                writeStringError = true;
+                Console(ConsoleType.ERROR, "<red>Cannot write string to PacketDataSerializer: " + t.getMessage());
+            }
+            return true; // Error
+        }
+    }
+
+    @EventHandler()
+    public void onPlayerJoin(PlayerJoinEvent event) {
+        updateBrandForPlayer(event.getPlayer());
     }
 }
