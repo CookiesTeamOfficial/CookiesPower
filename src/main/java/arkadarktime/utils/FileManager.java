@@ -23,7 +23,7 @@ public class FileManager extends FileConfiguration implements BukkitConsole {
     private final FileConfiguration fileConfiguration;
     // Паттерны для HEX и градиентов
     private static final Pattern HEX_PATTERN = Pattern.compile("(#|&#|§#)([0-9A-Fa-f]{6})");
-    private static final Pattern GRADIENT_PATTERN = Pattern.compile("(<gradient:)(#|&#|§#)([0-9A-Fa-f]{6})(>)(.*?)(</#|&#|§#)([0-9A-Fa-f]{6})(>)", Pattern.CASE_INSENSITIVE);
+    private static final Pattern GRADIENT_PATTERN = Pattern.compile("(<gradient:)(#|&#|§#)([0-9A-Fa-f]{6})(>)(.*?)(<#|&#|§#)([0-9A-Fa-f]{6})(>)", Pattern.CASE_INSENSITIVE);
 
     public FileManager(CookiesPower plugin, FileConfiguration fileConfiguration) {
         this.plugin = plugin;
@@ -178,9 +178,6 @@ public class FileManager extends FileConfiguration implements BukkitConsole {
      * @return обработанная строка
      */
     public String applyColorsAndPlaceholders(CookiesPlayer cookiesPlayer, String message, boolean animations) {
-        message = applyGradient(message);
-        message = convertHexColors(message);
-
         String prefix = plugin.getLangFile().getString("prefix");
         if (prefix != null) {
             message = message.replace("%plugin-prefix%", prefix);
@@ -194,6 +191,9 @@ public class FileManager extends FileConfiguration implements BukkitConsole {
         if (animations) {
             message = plugin.getAnimationsManager().replaceAnimations(message);
         }
+
+        message = applyGradient(message);
+        message = convertHexColors(message);
 
         return message;
     }
