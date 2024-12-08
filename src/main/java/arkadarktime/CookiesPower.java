@@ -202,10 +202,6 @@ public final class CookiesPower extends JavaPlugin implements BukkitConsole {
     // Loads a file from plugin resources into a specified target folder, creating the folder if necessary
     private FileConfiguration loadFile(String fileName, String pathInPlugin, String inFolder) {
         try {
-            Console("File name: " + fileName, LineType.TOP_SIDE_LINE);
-            Console("Path in plugin: " + pathInPlugin, LineType.LINE);
-            Console("In folder: " + inFolder, LineType.BOTTOM_SIDE_LINE);
-
             if (inFolder != null) {
                 File targetDirectory = new File(getDataFolder(), inFolder);
                 if (!targetDirectory.exists()) {
