@@ -123,6 +123,8 @@ public class ServerMotdModule implements ModuleTicker {
         boolean isServerFull = Bukkit.getOnlinePlayers().size() >= Bukkit.getMaxPlayers();
         String motdPath = "server-motd." + (isServerFull ? "server-full" : "normal");
 
+        Console("Loading motd settings!!!");
+
         // Motd
         isMotdEnable = serverFileManager.getBoolean(motdPath + ".motd.enable");
         isMotdRandom = serverFileManager.getBoolean(motdPath + ".motd.random");
