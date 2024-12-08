@@ -3,7 +3,7 @@ package arkadarktime.modules;
 import arkadarktime.CookiesPower;
 import arkadarktime.enums.CookiesPlayer;
 import arkadarktime.interfaces.ModuleListener;
-import arkadarktime.utils.components.CookiesComponentBuilder;
+import arkadarktime.utils.CookiesComponentBuilder;
 import arkadarktime.utils.FileManager;
 import arkadarktime.utils.MinecraftLangManager;
 import net.md_5.bungee.api.ChatColor;

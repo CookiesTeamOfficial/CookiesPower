@@ -56,7 +56,7 @@ public class ServerMotdModule implements ModuleTicker {
         if (!plugin.getConfig().getBoolean("modules.tablist.enable")) return;
 
         ModuleTicker.super.enable();
-        if (plugin.protocolLibAPI.isClosed() || plugin.protocolLibAPI == null) {
+        if (plugin.protocolManager.isClosed() || plugin.protocolManager == null) {
             ModuleTicker.super.disable();
             Console(ConsoleType.WARN, "ServerMotdModule is disabled because ProtocolLib is not installed!", LineType.SIDE_LINES);
         } else {
@@ -79,7 +79,7 @@ public class ServerMotdModule implements ModuleTicker {
         }
 
         MinecraftNameGenerator minecraftNameGenerator = new MinecraftNameGenerator(3);
-        plugin.protocolLibAPI.addPacketListener(new PacketAdapter(plugin, ListenerPriority.NORMAL, PacketType.Status.Server.SERVER_INFO) {
+        plugin.protocolManager.addPacketListener(new PacketAdapter(plugin, ListenerPriority.NORMAL, PacketType.Status.Server.SERVER_INFO) {
             @Override
             public void onPacketSending(PacketEvent event) {
                 WrappedServerPing serverPing = event.getPacket().getServerPings().read(0);

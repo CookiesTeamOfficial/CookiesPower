@@ -16,7 +16,7 @@ public class ProtocolLibHook implements HookPlugin {
     public void hook() {
         String name = "ProtocolLib";
         if (Bukkit.getPluginManager().getPlugin(name) != null) {
-            plugin.protocolLibAPI = ProtocolLibrary.getProtocolManager();
+            plugin.protocolManager = ProtocolLibrary.getProtocolManager();
             sendMessage(name, true);
         } else {
             sendMessage(name, false);
