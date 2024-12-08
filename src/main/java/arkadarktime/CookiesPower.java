@@ -20,10 +20,6 @@ import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
-import java.nio.file.Files;
-import java.nio.file.StandardCopyOption;
 import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
@@ -209,20 +205,6 @@ public final class CookiesPower extends JavaPlugin implements BukkitConsole {
         } catch ( Exception e ) {
             e.printStackTrace();
             return null;
-        }
-    }
-
-    // Copy default file from resources function
-    private void copyDefaultFile(String resourcePath, File destFile) {
-        try (InputStream inputStream = getClass().getClassLoader().getResourceAsStream(resourcePath)) {
-            if (inputStream == null) {
-                Console(BukkitConsole.ConsoleType.WARN, "Resource not found: " + resourcePath, BukkitConsole.LineType.SIDE_LINES);
-                return;
-            }
-            Files.copy(inputStream, destFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
-        } catch ( IOException e ) {
-            e.printStackTrace();
-            Console(BukkitConsole.ConsoleType.ERROR, "Failed to copy " + destFile.getName() + " file: " + e.getMessage(), BukkitConsole.LineType.SIDE_LINES);
         }
     }
 
