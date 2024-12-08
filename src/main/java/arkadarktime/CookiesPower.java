@@ -20,6 +20,10 @@ import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.nio.file.Files;
+import java.nio.file.StandardCopyOption;
 import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
@@ -155,56 +159,55 @@ public final class CookiesPower extends JavaPlugin implements BukkitConsole {
 
     // Load a config file
     public void loadConfigFile() {
-        loadFile("config.yml");
+        loadFile("config.yml", "config.yml", null);
     }
 
     // Load a lang file
     public boolean loadLangFile() {
         langCode = getConfig().getString("lang", "lang/en");
         String langFile = "lang/" + langCode + ".yml";
-        langFileManager = loadFile(langFile);
+        langFileManager = loadFile(langFile, langFile, "lang");
         return langFileManager != null;
     }
 
     // Load a tablist file
     public boolean loadTablistFile() {
-        tablistFileManager = loadFileInLand("tablist.yml");
+        tablistFileManager = loadFileLang("tablist.yml");
         return tablistFileManager != null;
     }
 
     // Load a chat file
     public boolean loadChatFile() {
-        chatFileManager = loadFileInLand("chat.yml");
+        chatFileManager = loadFileLang("chat.yml");
         return chatFileManager != null;
     }
 
     // Load a server file
     public boolean loadServerFile() {
-        serverFileManager = loadFileInLand("server.yml");
+        serverFileManager = loadFileLang("server.yml");
         return serverFileManager != null;
     }
 
     // Load an animation's file
     public boolean loadAnimationsFile() {
-        animationsFileManager = loadFileInLand("animations.yml");
+        animationsFileManager = loadFileLang("animations.yml");
         return animationsFileManager != null;
     }
 
-    // Loads a file from plugin resources, using the file name as the target folder
-    private FileConfiguration loadFile(String fileName) {
-        return this.loadFile(fileName, fileName);
-    }
-
-    // Loads a file from the language-specific folder (langCode), e.g., lang/ru/tablist.yml
-    private FileConfiguration loadFileInLand(String fileName) {
-        return this.loadFile("lang/" + langCode + "/" + fileName, fileName);
+    // Method to load the language file, considering the selected language code
+    private FileConfiguration loadFileLang(String fileName) {
+        return this.loadFile(fileName, "lang/" + langCode + "/" + fileName, null);
     }
 
     // Loads a file from plugin resources into a specified target folder, creating the folder if necessary
-    private FileConfiguration loadFile(String fileName, String targetFolder) {
+    private FileConfiguration loadFile(String fileName, String pathInPlugin, String inFolder) {
         try {
-            if (!fileName.equals(targetFolder)) {
-                File targetDirectory = new File(getDataFolder(), targetFolder);
+            Console("File name: " + fileName, LineType.TOP_SIDE_LINE);
+            Console("Path in plugin: " + pathInPlugin, LineType.LINE);
+            Console("In folder: " + inFolder, LineType.BOTTOM_SIDE_LINE);
+
+            if (inFolder != null) {
+                File targetDirectory = new File(getDataFolder(), inFolder);
                 if (!targetDirectory.exists()) {
                     targetDirectory.mkdirs();
                 }
@@ -212,7 +215,7 @@ public final class CookiesPower extends JavaPlugin implements BukkitConsole {
 
             File file = new File(getDataFolder(), fileName);
             if (!file.exists()) {
-                saveResource(fileName, false);
+                copyDefaultFile(pathInPlugin, file);
             }
             return YamlConfiguration.loadConfiguration(file);
         } catch ( Exception e ) {
@@ -240,5 +243,19 @@ public final class CookiesPower extends JavaPlugin implements BukkitConsole {
 
     public FileConfiguration getAnimationsFile() {
         return animationsFileManager;
+    }
+
+    // Copy default file from resources function
+    private void copyDefaultFile(String resourcePath, File destFile) {
+        try (InputStream inputStream = getClass().getClassLoader().getResourceAsStream(resourcePath)) {
+            if (inputStream == null) {
+                Console(BukkitConsole.ConsoleType.WARN, "Resource not found: " + resourcePath, BukkitConsole.LineType.SIDE_LINES);
+                return;
+            }
+            Files.copy(inputStream, destFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
+        } catch ( IOException e ) {
+            e.printStackTrace();
+            Console(BukkitConsole.ConsoleType.ERROR, "Failed to copy " + destFile.getName() + " file: " + e.getMessage(), BukkitConsole.LineType.SIDE_LINES);
+        }
     }
 }
