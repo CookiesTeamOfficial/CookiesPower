@@ -5,16 +5,11 @@ import arkadarktime.enums.CookiesPlayer;
 import arkadarktime.enums.TimeUnit;
 import arkadarktime.interfaces.BukkitConsole;
 import arkadarktime.interfaces.ModuleTicker;
-import arkadarktime.utils.ByteBufData;
 import arkadarktime.utils.CustomUtils;
 import arkadarktime.utils.FileManager;
 import com.comphenix.protocol.PacketType;
-import com.comphenix.protocol.events.PacketContainer;
+import com.comphenix.protocol.events.PacketAdapter;
 import com.comphenix.protocol.events.PacketEvent;
-import com.comphenix.protocol.wrappers.WrappedGameProfile;
-import io.netty.buffer.ByteBuf;
-import io.netty.buffer.Unpooled;
-import net.md_5.bungee.api.ChatColor;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -124,32 +119,25 @@ public class ServerBrandModule implements ModuleTicker, BukkitConsole {
 
         CookiesPlayer cookiesPlayer = plugin.getPlayerDatabaseManager().getCookiesPlayer(player.getUniqueId());
         String coloredBrand = langFileManager.applyColorsAndPlaceholders(cookiesPlayer, this.brand, true);
-        ByteBuf byteBuf = Unpooled.buffer();
-        ByteBufData.writeString(coloredBrand + ChatColor.RESET, byteBuf);
-//        cookiesPlayer.sendPluginMessage(plugin, channel, ByteBufData.toArray(byteBuf));
-        byteBuf.release();
-    }
 
-//    public void changeServerBrand(String brand) {
-//        // Создаем новый PacketContainer для изменения server brand
-//        PacketContainer packet = new PacketContainer(PacketType.Status.Server.SERVER_INFO);
-//
-//        // Используем WrappedGameProfile для создания профиля
-//        WrappedGameProfile profile = new WrappedGameProfile(null, brand);
-//
-//        // Устанавливаем данные профиля
-//        packet.getGameProfiles().write(0, profile);
-//
-//        // Отправляем пакет всем онлайн игрокам
-//        for (Player player : Bukkit.getOnlinePlayers()) {
-//            try {
-//                PacketEvent event = new PacketEvent(player, packet);
-//                plugin.protocolLibAPI.sendServerPacket(player, packet);
-//            } catch (Exception e) {
-//                e.printStackTrace();
-//            }
-//        }
-//    }
+        Console("Channel: " + channel);
+
+        plugin.protocolManager.addPacketListener(new PacketAdapter(plugin, PacketType.Play.Client.CUSTOM_PAYLOAD) {
+            @Override
+            public void onPacketReceiving(PacketEvent event) {
+                if (event.getPacketType() == PacketType.Play.Client.CUSTOM_PAYLOAD) {
+                    String channel2 = event.getPacket().getStrings().read(0);
+                    if (channel2.equals(channel)) { // Старый формат канала
+                        event.getPacket().getModifier().write(0, "CustomBrand"); // Здесь "CustomBrand" — твой бренд
+                    }
+                }
+            }
+        });
+
+//        player.sendPluginMessage(plugin, channel, new PacketDataSerializer(Unpooled.buffer()).a(coloredBrand).array());
+
+//        player.sendPluginMessage(plugin, channel, new PacketSerializer(coloredBrand + ChatColor.RESET).toArray());
+    }
 
     @EventHandler(ignoreCancelled = true)
     public void onPlayerJoin(PlayerJoinEvent event) {
