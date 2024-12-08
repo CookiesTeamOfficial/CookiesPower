@@ -143,6 +143,7 @@ public final class CookiesPower extends JavaPlugin implements BukkitConsole {
         return animationsManager;
     }
 
+    // Load all files function
     private void loadFiles() {
         loadConfigFile();
         loadLangFile();
@@ -159,7 +160,7 @@ public final class CookiesPower extends JavaPlugin implements BukkitConsole {
 
     // Load a lang file
     public boolean loadLangFile() {
-        langCode = getConfig().getString("lang", "en");
+        langCode = getConfig().getString("lang", "lang/en");
         String langFile = "lang/" + langCode + ".yml";
         langFileManager = loadFile(langFile);
         return langFileManager != null;
@@ -189,14 +190,26 @@ public final class CookiesPower extends JavaPlugin implements BukkitConsole {
         return animationsFileManager != null;
     }
 
-    // Load file from plugin resources but in folder by lang code
-    private FileConfiguration loadFileInLand(String fileName) {
-        return this.loadFile(langCode + "/" + fileName);
+    // Loads a file from plugin resources, using the file name as the target folder
+    private FileConfiguration loadFile(String fileName) {
+        return this.loadFile(fileName, fileName);
     }
 
-    // Load file from plugin resources function
-    private FileConfiguration loadFile(String fileName) {
+    // Loads a file from the language-specific folder (langCode), e.g., lang/ru/tablist.yml
+    private FileConfiguration loadFileInLand(String fileName) {
+        return this.loadFile("lang/" + langCode + "/" + fileName, fileName);
+    }
+
+    // Loads a file from plugin resources into a specified target folder, creating the folder if necessary
+    private FileConfiguration loadFile(String fileName, String targetFolder) {
         try {
+            if (!fileName.equals(targetFolder)) {
+                File targetDirectory = new File(getDataFolder(), targetFolder);
+                if (!targetDirectory.exists()) {
+                    targetDirectory.mkdirs();
+                }
+            }
+
             File file = new File(getDataFolder(), fileName);
             if (!file.exists()) {
                 saveResource(fileName, false);
