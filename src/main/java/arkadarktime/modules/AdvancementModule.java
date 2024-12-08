@@ -1,10 +1,11 @@
 package arkadarktime.modules;
 
 import arkadarktime.CookiesPower;
+import arkadarktime.enums.CookiesPlayer;
 import arkadarktime.interfaces.ModuleListener;
+import arkadarktime.utils.CookiesComponentBuilder;
 import arkadarktime.utils.CustomUtils;
 import arkadarktime.utils.FileManager;
-import arkadarktime.utils.CookiesComponentBuilder;
 import net.md_5.bungee.api.chat.BaseComponent;
 import net.md_5.bungee.api.chat.HoverEvent;
 import net.md_5.bungee.api.chat.TranslatableComponent;
@@ -40,22 +41,31 @@ public class AdvancementModule implements ModuleListener {
     public void onAdvancementDone(PlayerAdvancementDoneEvent event) {
         FileManager langFileManager = new FileManager(plugin, plugin.getLangFile());
         Player player = event.getPlayer();
+        CookiesPlayer cookiesPlayer = plugin.getPlayerDatabaseManager().getCookiesPlayer(player.getUniqueId());
         Advancement advancement = event.getAdvancement();
 
         if (advancement.getDisplay() != null && advancement.getDisplay().shouldAnnounceChat()) {
             String advancementType = advancement.getDisplay().getType().toString().toLowerCase();
-            String advancementTitleKey = "advancements." + advancement.getKey().getKey().replace("/", ".") + ".title";
-            String advancementDescriptionKey = "advancements." + advancement.getKey().getKey().replace("/", ".") + ".description";
+            String advancementTitleKey = "advancements." + advancement.getKey().getKey().replace("/", ".").replace("bred_all_animals", "breed_all_animals").replace("obtain_netherite_hoe", "netherite_hoe") + ".title";
+            String advancementDescriptionKey = "advancements." + advancement.getKey().getKey().replace("/", ".").replace("bred_all_animals", "breed_all_animals").replace("obtain_netherite_hoe", "netherite_hoe") + ".description";
 
             TranslatableComponent advancementTitle = new TranslatableComponent(advancementTitleKey);
             TranslatableComponent advancementDescription = new TranslatableComponent(advancementDescriptionKey);
 
-            CookiesComponentBuilder advancementText = new CookiesComponentBuilder(langFileManager.getColoredString(player, "advancement." + advancementType + ".text"));
-            advancementText.replace("%player%", player.getDisplayName());
+            boolean advancementVisible = langFileManager.getBoolean("advancement." + advancementType + ".visible", true);
+            String advancementTextString = langFileManager.getColoredString(cookiesPlayer, "advancement." + advancementType + ".text");
+            String advancementHoverString = langFileManager.getColoredString(cookiesPlayer, "advancement." + advancementType + ".hover");
+
+            advancementTitle.setColor(customUtils.getLastColor(advancementTextString));
+            advancementDescription.setColor(customUtils.getLastColor(advancementHoverString));
+
+            CookiesComponentBuilder advancementText = new CookiesComponentBuilder(advancementTextString);
+            advancementText.replace("%player%", cookiesPlayer.getDisplayName());
             advancementText.replace("%name%", advancementTitle);
             advancementText.replace("%description%", advancementDescription);
-            CookiesComponentBuilder advancementHover = new CookiesComponentBuilder(langFileManager.getColoredString(player, "advancement." + advancementType + ".hover"));
-            advancementHover.replace("%player%", player.getDisplayName());
+
+            CookiesComponentBuilder advancementHover = new CookiesComponentBuilder(advancementHoverString);
+            advancementHover.replace("%player%", cookiesPlayer.getDisplayName());
             advancementHover.replace("%name%", advancementTitle);
             advancementHover.replace("%description%", advancementDescription);
 
@@ -65,8 +75,11 @@ public class AdvancementModule implements ModuleListener {
             advancementTitle.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new Text(advancementHoverBuilt)));
 
             BaseComponent[] advancementTextBuilt = advancementText.build();
-            plugin.getServer().spigot().broadcast(advancementTextBuilt);
-            plugin.getServer().getConsoleSender().spigot().sendMessage(advancementTextBuilt);
+
+            if (advancementVisible) {
+                plugin.getServer().spigot().broadcast(advancementTextBuilt);
+                plugin.getServer().getConsoleSender().spigot().sendMessage(advancementTextBuilt);
+            }
         }
     }
 }
