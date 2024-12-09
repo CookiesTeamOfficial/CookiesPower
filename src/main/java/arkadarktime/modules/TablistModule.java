@@ -71,26 +71,26 @@ public class TablistModule implements ModuleTicker, BukkitConsole {
     private void updateTablistForPlayer(CookiesPlayer cookiesPlayer) {
         FileManager tablistFileManager = new FileManager(plugin, plugin.getTablistFile());
         String worldName = cookiesPlayer.getPlayer().getWorld().getName();
-        boolean worldTablistEnabled = tablistFileManager.getBoolean("tablist.per-world." + worldName + ".enable");
+        ConfigurationSection worldSection = tablistFileManager.getConfigurationSection("tablist.per-world");
 
-        if (worldTablistEnabled) {
-            ConfigurationSection worldSection = tablistFileManager.getConfigurationSection("tablist.per-world");
-            if (worldSection != null) {
+        if (worldSection != null && worldSection.contains(worldName)) {
+            boolean worldTablistEnabled = tablistFileManager.getBoolean("tablist.per-world." + worldName + ".enable");
+            if (worldTablistEnabled) {
                 if (worldSection.contains(worldName)) {
                     List<String> header = tablistFileManager.getColoredStringList(cookiesPlayer, "tablist.per-world." + worldName + ".header");
                     List<String> footer = tablistFileManager.getColoredStringList(cookiesPlayer, "tablist.per-world." + worldName + ".footer");
                     updateTablistForPlayer(cookiesPlayer, header, footer);
-                    Console("Update per world: " + worldName + " for player: " + cookiesPlayer.getDisplayName());
+                    return;
                 }
             }
-        } else {
-            boolean globalTablistEnabled = tablistFileManager.getBoolean("tablist.global.enable");
-            if (globalTablistEnabled) {
-                List<String> header = tablistFileManager.getColoredStringList(cookiesPlayer, "tablist.global.header");
-                List<String> footer = tablistFileManager.getColoredStringList(cookiesPlayer, "tablist.global.footer");
-                updateTablistForPlayer(cookiesPlayer, header, footer);
-                Console("Update global: " + worldName + " for player: " + cookiesPlayer.getDisplayName());
-            }
+        }
+
+        boolean globalTablistEnabled = tablistFileManager.getBoolean("tablist.global.enable");
+        if (globalTablistEnabled) {
+            List<String> header = tablistFileManager.getColoredStringList(cookiesPlayer, "tablist.global.header");
+            List<String> footer = tablistFileManager.getColoredStringList(cookiesPlayer, "tablist.global.footer");
+            updateTablistForPlayer(cookiesPlayer, header, footer);
+            Console("Update global: " + worldName + " for player: " + cookiesPlayer.getDisplayName());
         }
     }
 
