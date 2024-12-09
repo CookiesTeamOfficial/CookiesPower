@@ -8,7 +8,6 @@ import arkadarktime.interfaces.ModuleTicker;
 import arkadarktime.utils.CustomUtils;
 import arkadarktime.utils.FileManager;
 import org.bukkit.Bukkit;
-import org.bukkit.World;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scheduler.BukkitTask;
@@ -71,15 +70,28 @@ public class TablistModule implements ModuleTicker, BukkitConsole {
 
     private void updateTablistForPlayer(CookiesPlayer cookiesPlayer) {
         FileManager tablistFileManager = new FileManager(plugin, plugin.getTablistFile());
+        String worldName = cookiesPlayer.getPlayer().getWorld().getName();
+        boolean worldTablistEnabled = tablistFileManager.getBoolean("tablist.per-world." + worldName + ".enable");
 
-        boolean globalTablistEnabled = tablistFileManager.getBoolean("tablist.global.enable");
-        if (globalTablistEnabled) {
-            List<String> header = tablistFileManager.getColoredStringList(cookiesPlayer, "tablist.global.header");
-            List<String> footer = tablistFileManager.getColoredStringList(cookiesPlayer, "tablist.global.footer");
-            updateTablistForPlayer(cookiesPlayer, header, footer);
+        if (worldTablistEnabled) {
+            ConfigurationSection worldSection = tablistFileManager.getConfigurationSection("tablist.per-world");
+            if (worldSection != null) {
+                if (worldSection.contains(worldName)) {
+                    List<String> header = tablistFileManager.getColoredStringList(cookiesPlayer, "tablist.per-world." + worldName + ".header");
+                    List<String> footer = tablistFileManager.getColoredStringList(cookiesPlayer, "tablist.per-world." + worldName + ".footer");
+                    updateTablistForPlayer(cookiesPlayer, header, footer);
+                    Console("Update per world: " + worldName + " for player: " + cookiesPlayer.getDisplayName());
+                }
+            }
+        } else {
+            boolean globalTablistEnabled = tablistFileManager.getBoolean("tablist.global.enable");
+            if (globalTablistEnabled) {
+                List<String> header = tablistFileManager.getColoredStringList(cookiesPlayer, "tablist.global.header");
+                List<String> footer = tablistFileManager.getColoredStringList(cookiesPlayer, "tablist.global.footer");
+                updateTablistForPlayer(cookiesPlayer, header, footer);
+                Console("Update global: " + worldName + " for player: " + cookiesPlayer.getDisplayName());
+            }
         }
-
-        updatePerWorldTablists();
     }
 
     private void updateTablistForPlayer(CookiesPlayer cookiesPlayer, List<String> header, List<String> footer) {
@@ -89,27 +101,6 @@ public class TablistModule implements ModuleTicker, BukkitConsole {
                 setTablistHeaderFooter(cookiesPlayer, header, footer);
             }
         }.runTask(plugin);
-    }
-
-    private void updatePerWorldTablists() {
-        FileManager tablistFileManager = new FileManager(plugin, plugin.getTablistFile());
-        ConfigurationSection worldSection = tablistFileManager.getConfigurationSection("tablist.per-world");
-        if (worldSection != null) {
-            worldSection.getKeys(false).forEach(worldName -> {
-                boolean worldTablistEnabled = tablistFileManager.getBoolean("tablist.per-world." + worldName + ".enable");
-                if (worldTablistEnabled) {
-                    World world = Bukkit.getWorld(worldName);
-                    if (world != null) {
-                        world.getPlayers().forEach(player -> {
-                            CookiesPlayer cookiesPlayer = plugin.getPlayerDatabaseManager().getCookiesPlayer(player.getUniqueId());
-                            List<String> header = tablistFileManager.getColoredStringList(cookiesPlayer, "tablist.per-world." + worldName + ".header");
-                            List<String> footer = tablistFileManager.getColoredStringList(cookiesPlayer, "tablist.per-world." + worldName + ".footer");
-                            updateTablistForPlayer(cookiesPlayer, header, footer);
-                        });
-                    }
-                }
-            });
-        }
     }
 
     private String replacePlaceholders(CookiesPlayer cookiesPlayer, String text) {
