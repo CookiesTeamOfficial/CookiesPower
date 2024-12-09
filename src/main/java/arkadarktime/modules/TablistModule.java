@@ -29,8 +29,8 @@ public class TablistModule implements ModuleTicker, BukkitConsole {
     public void enable() {
         if (!plugin.getConfig().getBoolean("modules.tablist.enable")) return;
 
-        ModuleTicker.super.enable();
-        registerListener(this, plugin);
+        ModuleTicker.super.enable(plugin);
+
         this.start();
     }
 

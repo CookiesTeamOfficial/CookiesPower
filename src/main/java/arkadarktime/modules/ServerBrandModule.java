@@ -46,8 +46,8 @@ public class ServerBrandModule implements ModuleTicker, BukkitConsole {
     public void enable() {
         if (!plugin.getConfig().getBoolean("modules.server-brand.enable")) return;
 
-        ModuleTicker.super.enable();
-        registerListener(this, plugin);
+        ModuleTicker.super.enable(plugin);
+
         this.start();
     }
 

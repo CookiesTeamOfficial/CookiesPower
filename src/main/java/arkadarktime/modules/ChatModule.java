@@ -36,8 +36,7 @@ public class ChatModule implements ModuleListener, BukkitConsole {
     public void enable() {
         if (!plugin.getConfig().getBoolean("modules.chat.enable")) return;
 
-        ModuleListener.super.enable();
-        registerListener(this, plugin);
+        ModuleListener.super.enable(plugin);
     }
 
     @EventHandler

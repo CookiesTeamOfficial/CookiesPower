@@ -32,9 +32,9 @@ public class AdvancementModule implements ModuleListener {
     public void enable() {
         if (!plugin.getConfig().getBoolean("modules.advancements.enable")) return;
 
-        ModuleListener.super.enable();
+        ModuleListener.super.enable(plugin);
+
         Bukkit.getWorlds().forEach(world -> world.setGameRule(GameRule.ANNOUNCE_ADVANCEMENTS, false));
-        registerListener(this, plugin);
     }
 
     @EventHandler

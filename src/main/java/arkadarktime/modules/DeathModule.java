@@ -29,8 +29,7 @@ public class DeathModule implements ModuleListener {
     public void enable() {
         if (!plugin.getConfig().getBoolean("modules.death.enable")) return;
 
-        ModuleListener.super.enable();
-        registerListener(this, plugin);
+        ModuleListener.super.enable(plugin);
     }
 
     @EventHandler

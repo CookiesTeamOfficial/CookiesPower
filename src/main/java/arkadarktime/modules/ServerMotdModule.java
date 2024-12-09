@@ -56,10 +56,12 @@ public class ServerMotdModule implements ModuleTicker {
         if (!plugin.getConfig().getBoolean("modules.tablist.enable")) return;
 
         ModuleTicker.super.enable();
+
         if (plugin.protocolManager.isClosed() || plugin.protocolManager == null) {
             ModuleTicker.super.disable();
             Console(ConsoleType.WARN, "ServerMotdModule is disabled because ProtocolLib is not installed!", LineType.SIDE_LINES);
         } else {
+            loadMotdSettings();
             this.start();
         }
     }
@@ -71,9 +73,14 @@ public class ServerMotdModule implements ModuleTicker {
     }
 
     @Override
-    public void start() {
+    public void restart() {
+        this.disable(false);
         loadMotdSettings();
+        this.enable(false);
+    }
 
+    @Override
+    public void start() {
         if (!isMotdUpdateWhenPing) {
             updateServerMotdTaskId = Bukkit.getScheduler().runTaskTimerAsynchronously(plugin, this::update, 0L, motdUpdateInterval).getTaskId();
         }
