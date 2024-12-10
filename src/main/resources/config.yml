@@ -26,30 +26,40 @@ enable-bstats: true
 modules:
   tablist:
     # Enable tablist module?
-    # Default true
+    # Default: true
     enable: true
 
   chat:
     # Enable chat module?
-    # Default true
+    # Default: true
+    enable: true
+
+  join:
+    # Enable join module?
+    # Default: true
+    enable: true
+
+  quit:
+    # Enable quit module?
+    # Default: true
     enable: true
 
   server-motd:
     # Enable server-motd module?
-    # Default true
+    # Default: true
     enable: true
 
   server-brand:
     # Enable server-brand module?
-    # Default true
+    # Default: true
     enable: true
 
   death:
     # Enable death module?
-    # Default true
+    # Default: true
     enable: true
 
   advancements:
     # Enable advancements module?
-    # Default true
+    # Default: true
     enable: true

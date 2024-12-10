@@ -54,7 +54,9 @@ public final class CookiesPower extends JavaPlugin implements BukkitConsole {
     public final ChatModule chatModule = new ChatModule(this);
     public final ServerMotdModule serverMotdModule = new ServerMotdModule(this);
     public final ServerBrandModule serverBrandModule = new ServerBrandModule(this);
-    private final List<ModuleListener> allModules = Arrays.asList(tablistModule, deathModule, advancementModule, chatModule, serverMotdModule, serverBrandModule);
+    public final PlayerJoinModule playerJoinModule = new PlayerJoinModule(this);
+    public final PlayerQuitModule playerQuitModule = new PlayerQuitModule(this);
+    private final List<ModuleListener> allModules = Arrays.asList(tablistModule, deathModule, advancementModule, chatModule, serverMotdModule, serverBrandModule, playerJoinModule, playerQuitModule);
 
     // Plugin enable method
     @Override

@@ -23,6 +23,28 @@ commands:
     - "   Permission - &ecookiespower.commands.help"
     - "&r"
 
+# Message when a player joins
+# Leave message empty for the default message or specify your text
+join:
+  # Message displayed on the server for all players when this player join
+  # You can use a list:
+  #  message:
+  #   - ""
+  #   - ""
+  #   - ""
+  message: "&2• &a%player% &fjoined to the server!"
+
+# Message when a player quits
+# Leave message empty for the default message or specify your text
+quit:
+  # Message displayed on the server for all players when this player quit
+  # You can use a list:
+  #  message:
+  #   - ""
+  #   - ""
+  #   - ""
+  message: "&4• &a%player% &fleft from the server!"
+
 # Death strings
 death:
   # Is the death message visible?
