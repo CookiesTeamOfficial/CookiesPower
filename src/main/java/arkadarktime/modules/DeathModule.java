@@ -2,7 +2,7 @@ package arkadarktime.modules;
 
 import arkadarktime.CookiesPower;
 import arkadarktime.enums.CookiesPlayer;
-import arkadarktime.interfaces.ModuleListener;
+import arkadarktime.interfaces.modules.ModuleListener;
 import arkadarktime.utils.CookiesComponentBuilder;
 import arkadarktime.utils.FileManager;
 import arkadarktime.utils.MinecraftLangManager;

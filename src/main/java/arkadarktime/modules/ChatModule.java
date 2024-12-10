@@ -3,7 +3,7 @@ package arkadarktime.modules;
 import arkadarktime.CookiesPower;
 import arkadarktime.enums.CookiesPlayer;
 import arkadarktime.interfaces.BukkitConsole;
-import arkadarktime.interfaces.ModuleListener;
+import arkadarktime.interfaces.modules.ModuleListener;
 import arkadarktime.utils.CookiesComponentBuilder;
 import arkadarktime.utils.CustomUtils;
 import arkadarktime.utils.FileManager;

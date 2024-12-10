@@ -4,7 +4,7 @@ import arkadarktime.commands.MainCommand;
 import arkadarktime.commands.TabCompletor;
 import arkadarktime.interfaces.BukkitConsole;
 import arkadarktime.interfaces.HookPlugin;
-import arkadarktime.interfaces.ModuleListener;
+import arkadarktime.interfaces.modules.ModuleListener;
 import arkadarktime.modules.*;
 import arkadarktime.utils.AnimationsManager;
 import arkadarktime.utils.InventoryManager;

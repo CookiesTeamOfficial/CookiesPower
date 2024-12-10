@@ -4,7 +4,7 @@ import arkadarktime.CookiesPower;
 import arkadarktime.enums.CookiesPlayer;
 import arkadarktime.enums.TimeUnit;
 import arkadarktime.interfaces.BukkitConsole;
-import arkadarktime.interfaces.ModuleTicker;
+import arkadarktime.interfaces.modules.ModuleTicker;
 import arkadarktime.utils.CustomUtils;
 import arkadarktime.utils.FileManager;
 import com.comphenix.protocol.PacketType;

@@ -1,4 +1,4 @@
-package arkadarktime.interfaces;
+package arkadarktime.interfaces.modules;
 
 import arkadarktime.CookiesPower;
 import org.bukkit.event.Listener;
