@@ -14,9 +14,16 @@ import com.comphenix.protocol.wrappers.WrappedGameProfile;
 import com.comphenix.protocol.wrappers.WrappedServerPing;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
+import org.jetbrains.annotations.NotNull;
 
+import javax.imageio.ImageIO;
+import java.awt.*;
+import java.awt.image.BufferedImage;
 import java.io.*;
+import java.net.MalformedURLException;
+import java.net.URISyntaxException;
 import java.net.URL;
+import java.util.List;
 import java.util.*;
 
 public class ServerMotdModule implements ModuleTicker {
@@ -33,7 +40,7 @@ public class ServerMotdModule implements ModuleTicker {
     // Icons for MOTD
     private boolean isMotdIconsEnable;
     private boolean isMotdIconRandom;
-    private List<String> motdIcons;
+    private final List<String> motdIcons = new ArrayList<>();
     private WrappedServerPing.CompressedImage motdIcon;
     private int iconIndex = 0;
     // Max players
@@ -66,7 +73,7 @@ public class ServerMotdModule implements ModuleTicker {
         ModuleTicker.super.enable();
 
         if (plugin.protocolManager.isClosed() || plugin.protocolManager == null) {
-            ModuleTicker.super.disable();
+            this.disable();
             Console(ConsoleType.WARN, "ServerMotdModule is disabled because ProtocolLib is not installed!", LineType.SIDE_LINES);
         } else {
             loadMotdSettings();
@@ -152,7 +159,14 @@ public class ServerMotdModule implements ModuleTicker {
         // Icons
         isMotdIconsEnable = serverFileManager.getBoolean(motdPath + ".icons.enable");
         isMotdIconRandom = serverFileManager.getBoolean(motdPath + ".icons.random");
-        motdIcons = serverFileManager.getStringList(motdPath + ".icons.icons-list");
+        @NotNull List<String> iconsList = serverFileManager.getStringList(motdPath + ".icons.icons-list");
+        for (String icon : iconsList) {
+            if (icon.endsWith(".png")) {
+                motdIcons.add(icon);
+            } else {
+                Console(ConsoleType.WARN, "Server icon must be png, your: " + icon);
+            }
+        }
 
         // Max players
         isMaxPlayersEnable = serverFileManager.getBoolean(motdPath + ".max-players.enable");
@@ -205,12 +219,8 @@ public class ServerMotdModule implements ModuleTicker {
             motdText = getRandomText(motdTexts, isMotdRandom, true);
         }
 
-        Console("MOTD Icons: " + motdIcons);
-        if (motdIcons != null && !motdIcons.isEmpty()) {
-            String icon = getRandomIcon();
-            Console("Icon: " + icon);
-            motdIcon = loadIcon(icon);
-            Console("Loaded Icon: " + motdIcon);
+        if (!motdIcons.isEmpty()) {
+            motdIcon = loadIcon(getRandomIcon());
         }
 
         if (versionTexts != null && !versionTexts.isEmpty()) {
@@ -239,46 +249,95 @@ public class ServerMotdModule implements ModuleTicker {
     }
 
     private WrappedServerPing.CompressedImage loadIcon(String icon) {
-        byte[] iconData = loadIconBytes(icon);
-        if (iconData != null) {
-            return WrappedServerPing.CompressedImage.fromPng(iconData);
+        String iconBase64 = loadIconBase64(icon);
+        if (iconBase64 != null) {
+            return WrappedServerPing.CompressedImage.fromBase64Png(iconBase64);
         }
         return null;
     }
 
-    private byte[] loadIconBytes(String icon) {
-        Console("ICON: " + icon);
+    private String loadIconBase64(String icon) {
+        File iconFile = new File(plugin.getDataFolder(), "icons/" + icon);
 
-        try {
-            URL url = new URL(icon);
-            InputStream in = url.openStream();
-            ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-            byte[] buffer = new byte[1024];
-            int length;
-            while ((length = in.read(buffer)) != -1) {
-                byteArrayOutputStream.write(buffer, 0, length);
-            }
-            in.close();
-            return byteArrayOutputStream.toByteArray();
-        } catch ( IOException e ) {
-            File iconFile = new File(plugin.getDataFolder(), icon);
-            if (iconFile.exists()) {
-                try (InputStream inFile = new FileInputStream(iconFile)) {
-                    ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-                    byte[] buffer = new byte[1024];
-                    int length;
-                    while ((length = inFile.read(buffer)) != -1) {
-                        byteArrayOutputStream.write(buffer, 0, length);
-                    }
-                    return byteArrayOutputStream.toByteArray();
-                } catch ( IOException ex ) {
-                    Console(ConsoleType.ERROR, "Error loading icon bytes from file: " + ex.getMessage());
-                    ex.printStackTrace();
+        byte[] iconBytes = null;
+
+        if (isValidUrl(icon)) {
+            try {
+                URL url = new URL(icon);
+                InputStream in = url.openStream();
+                ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+                byte[] buffer = new byte[1024];
+                int length;
+                while ((length = in.read(buffer)) != -1) {
+                    byteArrayOutputStream.write(buffer, 0, length);
                 }
+                in.close();
+                iconBytes = byteArrayOutputStream.toByteArray();
+            } catch ( IOException error ) {
+                Console(ConsoleType.ERROR, "Error loading icon: Invalid URL.");
             }
-            Console(ConsoleType.ERROR, "Error loading icon: Invalid URL or file not found.");
-            e.printStackTrace();
+        } else if (iconFile.exists()) {
+            try (InputStream inFile = new FileInputStream(iconFile)) {
+                ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+                byte[] buffer = new byte[1024];
+                int length;
+                while ((length = inFile.read(buffer)) != -1) {
+                    byteArrayOutputStream.write(buffer, 0, length);
+                }
+                iconBytes = byteArrayOutputStream.toByteArray();
+            } catch ( IOException error ) {
+                Console(ConsoleType.ERROR, "Error loading icon bytes from file: " + error.getMessage());
+                error.printStackTrace();
+            }
+        }
+
+        if (iconBytes != null) {
+            return resizeIconTo64x64(iconBytes);
+        }
+
+        Console(ConsoleType.ERROR, "Error loading icon: File \"" + icon + "\" not found.");
+        return null;
+    }
+
+    private String resizeIconTo64x64(byte[] imageBytes) {
+        try {
+            ByteArrayInputStream inputStream = new ByteArrayInputStream(imageBytes);
+            BufferedImage originalImage = ImageIO.read(inputStream);
+
+            if (originalImage == null) {
+                Console(ConsoleType.ERROR, "Error resizing icon: Invalid image format.");
+                return null;
+            }
+
+            int originalWidth = originalImage.getWidth();
+            int originalHeight = originalImage.getHeight();
+
+            if (originalWidth <= 64 && originalHeight <= 64) {
+                return Base64.getEncoder().encodeToString(imageBytes);
+            }
+
+            BufferedImage resizedImage = new BufferedImage(64, 64, BufferedImage.TYPE_INT_ARGB);
+            Graphics2D g2d = resizedImage.createGraphics();
+            g2d.drawImage(originalImage, 0, 0, 64, 64, null);
+            g2d.dispose();
+
+            ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+            ImageIO.write(resizedImage, "png", outputStream);
+
+            return Base64.getEncoder().encodeToString(outputStream.toByteArray());
+        } catch ( IOException error ) {
+            Console(ConsoleType.ERROR, "Error resizing icon: " + error.getMessage());
+            error.printStackTrace();
             return null;
+        }
+    }
+
+    public static boolean isValidUrl(String urlString) {
+        try {
+            new URL(urlString).toURI();
+            return true;
+        } catch ( MalformedURLException | URISyntaxException e ) {
+            return false;
         }
     }
 }
