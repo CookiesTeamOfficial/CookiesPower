@@ -224,19 +224,23 @@ public final class CookiesPower extends JavaPlugin implements BukkitConsole {
     // Load all icons into the icons folder
     private void loadIcons() {
         try {
-            File iconsFolder = new File(getDataFolder(), "icons");
-            if (!iconsFolder.exists()) {
-                iconsFolder.mkdirs();
+            String iconsFolder = "icons";
+            File iconsPath = new File(getDataFolder(), iconsFolder);
+            if (!iconsPath.exists()) {
+                iconsPath.mkdirs();
             }
 
             String[] icons = {"server-icon-1.png", "server-icon-2.png", "server-icon-3.png", "server-icon-4.png", "server-icon-5.png"};
 
             for (String icon : icons) {
-                File iconFile = new File(iconsFolder, icon);
+                File iconFile = new File(iconsPath, icon);
                 if (!iconFile.exists()) {
-                    copyDefaultFile("icons/" + icon, iconFile);
+                    copyDefaultFile(iconsFolder + icon, iconFile);
                 }
             }
+
+            String readmeFile = iconsFolder + "/README.txt";
+            loadFile(readmeFile, readmeFile, iconsFolder);
         } catch ( Exception e ) {
             e.printStackTrace();
             Console(BukkitConsole.ConsoleType.ERROR, "Failed to load icons: " + e.getMessage(), BukkitConsole.LineType.SIDE_LINES);
