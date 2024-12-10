@@ -155,6 +155,7 @@ public final class CookiesPower extends JavaPlugin implements BukkitConsole {
         loadChatFile();
         loadServerFile();
         loadAnimationsFile();
+        loadIcons();
     }
 
     // Load a config file
@@ -217,6 +218,28 @@ public final class CookiesPower extends JavaPlugin implements BukkitConsole {
         } catch ( Exception e ) {
             e.printStackTrace();
             return null;
+        }
+    }
+
+    // Load all icons into the icons folder
+    private void loadIcons() {
+        try {
+            File iconsFolder = new File(getDataFolder(), "icons");
+            if (!iconsFolder.exists()) {
+                iconsFolder.mkdirs();
+            }
+
+            String[] icons = {"server-icon-1.png", "server-icon-2.png", "server-icon-3.png", "server-icon-4.png", "server-icon-5.png"};
+
+            for (String icon : icons) {
+                File iconFile = new File(iconsFolder, icon);
+                if (!iconFile.exists()) {
+                    copyDefaultFile("icons/" + icon, iconFile);
+                }
+            }
+        } catch ( Exception e ) {
+            e.printStackTrace();
+            Console(BukkitConsole.ConsoleType.ERROR, "Failed to load icons: " + e.getMessage(), BukkitConsole.LineType.SIDE_LINES);
         }
     }
 

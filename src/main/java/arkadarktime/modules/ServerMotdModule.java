@@ -15,6 +15,8 @@ import com.comphenix.protocol.wrappers.WrappedServerPing;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
+import java.io.*;
+import java.net.URL;
 import java.util.*;
 
 public class ServerMotdModule implements ModuleTicker {
@@ -28,6 +30,12 @@ public class ServerMotdModule implements ModuleTicker {
     private List<String> motdTexts;
     private String motdText;
     private int motdIndex = 0;
+    // Icons for MOTD
+    private boolean isMotdIconsEnable;
+    private boolean isMotdIconRandom;
+    private List<String> motdIcons;
+    private WrappedServerPing.CompressedImage motdIcon;
+    private int iconIndex = 0;
     // Max players
     private boolean isMaxPlayersEnable;
     private int maxPlayersCount;
@@ -95,15 +103,19 @@ public class ServerMotdModule implements ModuleTicker {
                     update();
                 }
 
-                if (isMotdEnable) {
+                if (isMotdEnable && motdText != null) {
                     serverPing.setMotD(motdText);
+                }
+
+                if (isMotdIconsEnable && motdIcon != null) {
+                    serverPing.setFavicon(motdIcon);
                 }
 
                 if (isMaxPlayersEnable) {
                     serverPing.setPlayersMaximum(maxPlayersCount);
                 }
 
-                if (isVersionEnable) {
+                if (isVersionEnable && versionText != null) {
                     serverPing.setVersionName(versionText);
                     serverPing.setVersionProtocol(versionProtocol);
                 }
@@ -130,21 +142,27 @@ public class ServerMotdModule implements ModuleTicker {
         boolean isServerFull = Bukkit.getOnlinePlayers().size() >= Bukkit.getMaxPlayers();
         String motdPath = "server-motd." + (isServerFull ? "server-full" : "normal");
 
-        Console("Loading motd settings!!!");
-
         // Motd
         isMotdEnable = serverFileManager.getBoolean(motdPath + ".motd.enable");
         isMotdRandom = serverFileManager.getBoolean(motdPath + ".motd.random");
         isMotdUpdateWhenPing = serverFileManager.getBoolean(motdPath + ".motd.update-when-ping");
         motdUpdateInterval = customUtils.parseTime(serverFileManager.getString(motdPath + ".motd.update-interval", "1s"), TimeUnit.TICKS);
         motdTexts = serverFileManager.getColoredStringList(null, motdPath + ".motd.texts");
+
+        // Icons
+        isMotdIconsEnable = serverFileManager.getBoolean(motdPath + ".icons.enable");
+        isMotdIconRandom = serverFileManager.getBoolean(motdPath + ".icons.random");
+        motdIcons = serverFileManager.getStringList(motdPath + ".icons.icons-list");
+
         // Max players
         isMaxPlayersEnable = serverFileManager.getBoolean(motdPath + ".max-players.enable");
         maxPlayersCount = serverFileManager.getInt(motdPath + ".max-players.count");
+
         // Fake players
         isFakePlayersEnable = serverFileManager.getBoolean(motdPath + ".fake-players.enable");
         fakePlayersCount = serverFileManager.getInt(motdPath + ".fake-players.count");
         isFakePlayersGenerateRandomNames = serverFileManager.getBoolean(motdPath + ".fake-players.generate-random-names");
+
         // Version
         isVersionEnable = serverFileManager.getBoolean(motdPath + ".version.enable");
         isVersionRandom = serverFileManager.getBoolean(motdPath + ".version.random");
@@ -187,6 +205,14 @@ public class ServerMotdModule implements ModuleTicker {
             motdText = getRandomText(motdTexts, isMotdRandom, true);
         }
 
+        Console("MOTD Icons: " + motdIcons);
+        if (motdIcons != null && !motdIcons.isEmpty()) {
+            String icon = getRandomIcon();
+            Console("Icon: " + icon);
+            motdIcon = loadIcon(icon);
+            Console("Loaded Icon: " + motdIcon);
+        }
+
         if (versionTexts != null && !versionTexts.isEmpty()) {
             versionText = getRandomText(versionTexts, isVersionRandom, false);
         }
@@ -201,6 +227,58 @@ public class ServerMotdModule implements ModuleTicker {
             } else {
                 return texts.get(versionIndex++ % texts.size());
             }
+        }
+    }
+
+    private String getRandomIcon() {
+        if (isMotdIconRandom) {
+            return motdIcons.get(new Random().nextInt(motdIcons.size()));
+        } else {
+            return motdIcons.get(iconIndex++ % motdIcons.size());
+        }
+    }
+
+    private WrappedServerPing.CompressedImage loadIcon(String icon) {
+        byte[] iconData = loadIconBytes(icon);
+        if (iconData != null) {
+            return WrappedServerPing.CompressedImage.fromPng(iconData);
+        }
+        return null;
+    }
+
+    private byte[] loadIconBytes(String icon) {
+        Console("ICON: " + icon);
+
+        try {
+            URL url = new URL(icon);
+            InputStream in = url.openStream();
+            ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+            byte[] buffer = new byte[1024];
+            int length;
+            while ((length = in.read(buffer)) != -1) {
+                byteArrayOutputStream.write(buffer, 0, length);
+            }
+            in.close();
+            return byteArrayOutputStream.toByteArray();
+        } catch ( IOException e ) {
+            File iconFile = new File(plugin.getDataFolder(), icon);
+            if (iconFile.exists()) {
+                try (InputStream inFile = new FileInputStream(iconFile)) {
+                    ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+                    byte[] buffer = new byte[1024];
+                    int length;
+                    while ((length = inFile.read(buffer)) != -1) {
+                        byteArrayOutputStream.write(buffer, 0, length);
+                    }
+                    return byteArrayOutputStream.toByteArray();
+                } catch ( IOException ex ) {
+                    Console(ConsoleType.ERROR, "Error loading icon bytes from file: " + ex.getMessage());
+                    ex.printStackTrace();
+                }
+            }
+            Console(ConsoleType.ERROR, "Error loading icon: Invalid URL or file not found.");
+            e.printStackTrace();
+            return null;
         }
     }
 }
