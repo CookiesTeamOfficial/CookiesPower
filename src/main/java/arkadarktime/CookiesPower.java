@@ -159,7 +159,7 @@ public final class CookiesPower extends JavaPlugin implements BukkitConsole {
         loadAnimationsFile();
         loadIcons();
         // Load readme file
-        loadFile("README.md", "README.md", null);
+        copyDefaultFile("README.md", new File("README.md"));
     }
 
     // Load a config file
