@@ -87,6 +87,22 @@ server-motd:
       texts:
         - "&fThis server use &6CookiesPower&r! \n&eBut server is full! Try join later!"
 
+    # Icon's settings
+    icons:
+      # Enable icons change
+      enable: true
+      # Use random icons from the list
+      random: true
+      # List of icons
+      # - You can specify file names if the icons are located in the 'icons' folder (e.g., server-icon-1.png).
+      # - Alternatively, you can provide direct URLs to use icons hosted online.
+      icons-list:
+        - "server-icon-1.png"
+        - "server-icon-2.png"
+        - "server-icon-3.png"
+        - "server-icon-4.png"
+        - "server-icon-5.png"
+
     # Max players settings
     max-players:
       # Enable max players display
