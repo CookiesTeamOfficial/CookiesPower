@@ -73,17 +73,17 @@ death:
     player: "&a%player% &rбыл убит игроком &a%killer% %by_item%"
     zombie: "&a%player% &rбыл съеден &a%killer% %due_to%"
 
-# Строки достижений
+# Строки достижений | Сейчас есть проблемы с hex цветами в тексте достижений, он иногда не применяется
 advancement:
   task:
     visible: true
-    text: "&a%player% &fполучил достижение &#4eff52%name%"
+    text: "&a🌟 &a%player% &fполучил достижение &f[&#4eff52%name%&f]"
     hover: "&#4eff52%name% \n%description%"
   goal:
     visible: true
-    text: "&a%player% &fвыполнил цель &#f2d40f%name%"
+    text: "&e🌟 &a%player% &fвыполнил цель &f[&#f2d40f%name%&f]"
     hover: "&#f2d40f%name% \n%description%"
   challenge:
     visible: true
-    text: "&a%player% &fзавершил испытание &#834eff%name%"
+    text: "&d🌟 &a%player% &fзавершил испытание &f[&#834eff%name%&f]"
     hover: "&#834eff%name% \n%description%"

@@ -73,17 +73,17 @@ death:
     player: "&a%player% &rwas killed by player &a%killer% %by_item%"
     zombie: "&a%player% &rwas eaten by &a%killer% %due_to%"
 
-# Advancement strings
+# Advancement strings | Currently there are problems with hex colors in the achievement text, it sometimes does not apply
 advancement:
   task:
     visible: true
-    text: "&#4eff52🌟 &a%player% &fearned achievement &#4eff52[%name%]"
+    text: "&a🌟 &a%player% &fearned achievement &f[&#4eff52%name%&f]"
     hover: "&#4eff52%name% \n%description%"
   goal:
     visible: true
-    text: "&#f2d40f🌟 &a%player% &fcompleted goal &#f2d40f[%name%]"
+    text: "&e🌟 &a%player% &fcompleted goal &f[&#f2d40f%name%&f]"
     hover: "&#f2d40f%name% \n%description%"
   challenge:
     visible: true
-    text: "&#834eff🌟 &a%player% &ffinished challenge &#834eff[%name%]"
+    text: "&d🌟 &a%player% &ffinished challenge &f[&#834eff%name%&f]"
     hover: "&#834eff%name% \n%description%"

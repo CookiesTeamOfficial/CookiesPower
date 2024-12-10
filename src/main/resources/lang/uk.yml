@@ -73,17 +73,17 @@ death:
     player: "&a%player% &rбув убитий гравцем &a%killer% %by_item%"
     zombie: "&a%player% &rбув з'їдений &a%killer% %due_to%"
 
-# Рядки досягнень
+# Рядки досягнень | Currently there are problems with hex colors in the achievement text, it sometimes does not apply
 advancement:
   task:
     visible: true
-    text: "&#4eff52🌟 &a%player% &fотримав досягнення &#4eff52[%name%]"
+    text: "&a🌟 &a%player% &fотримав досягнення &f[&#4eff52%name%&f]"
     hover: "&#4eff52%name% \n%description%"
   goal:
     visible: true
-    text: "&#f2d40f🌟 &a%player% &fзавершив ціль &#f2d40f[%name%]"
+    text: "&e🌟 &a%player% &fзавершив ціль &f[&#f2d40f%name%&f]"
     hover: "&#f2d40f%name% \n%description%"
   challenge:
     visible: true
-    text: "&#834eff🌟 &a%player% &fпройшов випробування &#834eff[%name%]"
+    text: "&d🌟 &a%player% &fпройшов випробування &f[&#834eff%name%&f]"
     hover: "&#834eff%name% \n%description%"
