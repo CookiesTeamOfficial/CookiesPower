@@ -156,6 +156,8 @@ public final class CookiesPower extends JavaPlugin implements BukkitConsole {
         loadServerFile();
         loadAnimationsFile();
         loadIcons();
+        // Load readme.txt
+        loadFile("README.txt", "README.txt", null);
     }
 
     // Load a config file
@@ -238,9 +240,6 @@ public final class CookiesPower extends JavaPlugin implements BukkitConsole {
                     copyDefaultFile(iconsFolder + icon, iconFile);
                 }
             }
-
-            String readmeFile = iconsFolder + "/README.txt";
-            loadFile(readmeFile, readmeFile, iconsFolder);
         } catch ( Exception e ) {
             e.printStackTrace();
             Console(BukkitConsole.ConsoleType.ERROR, "Failed to load icons: " + e.getMessage(), BukkitConsole.LineType.SIDE_LINES);
