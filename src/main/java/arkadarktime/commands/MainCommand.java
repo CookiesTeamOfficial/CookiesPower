@@ -68,6 +68,8 @@ public class MainCommand implements CommandExecutor {
                             plugin.serverBrandModule.restart();
                             plugin.serverMotdModule.restart();
 
+                            plugin.getAnimationsManager().reloadAnimations();
+
                             try {
                                 langFileManager.reload();
                             } catch ( InvalidConfigurationException e ) {

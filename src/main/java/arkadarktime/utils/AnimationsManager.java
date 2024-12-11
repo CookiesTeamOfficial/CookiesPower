@@ -65,4 +65,10 @@ public class AnimationsManager {
     public void stopAnimations() {
         animations.values().forEach(TextAnimation::stop);
     }
+
+    public void reloadAnimations() {
+        stopAnimations();
+        loadAnimations();
+        startAnimations();
+    }
 }
