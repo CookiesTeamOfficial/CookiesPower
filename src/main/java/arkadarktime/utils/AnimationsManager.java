@@ -28,7 +28,14 @@ public class AnimationsManager {
                     String updateTime = animConfig.getString("change-interval");
                     List<String> texts = animConfig.getStringList("texts");
                     if (!texts.isEmpty()) {
-                        animations.put(anim, new TextAnimation(plugin, updateTime, texts));
+                        Runnable onUpdate;
+                        onUpdate = () -> {
+                            plugin.tablistModule.update();
+                            plugin.serverMotdModule.update();
+                            plugin.serverBrandModule.update();
+                        };
+
+                        animations.put(anim, new TextAnimation(plugin, updateTime, texts, onUpdate));
                     }
                 }
             });
@@ -52,12 +59,7 @@ public class AnimationsManager {
     }
 
     public void startAnimations() {
-        animations.forEach((name, anim) -> {
-            anim.start();
-            plugin.tablistModule.update();
-            plugin.serverMotdModule.update();
-            plugin.serverBrandModule.update();
-        });
+        animations.forEach((name, anim) -> anim.start());
     }
 
     public void stopAnimations() {

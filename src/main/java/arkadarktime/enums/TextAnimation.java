@@ -13,14 +13,16 @@ public class TextAnimation {
     private final CustomUtils customUtils;
     private final String updateTime;
     private final List<String> text;
+    private final Runnable onUpdate;
     private int currentIndex = -1;
     private BukkitTask task;
 
-    public TextAnimation(CookiesPower plugin, String updateTime, List<String> text) {
+    public TextAnimation(CookiesPower plugin, String updateTime, List<String> text, Runnable onUpdate) {
         this.plugin = plugin;
         this.updateTime = updateTime;
         this.text = text;
         this.customUtils = new CustomUtils(plugin);
+        this.onUpdate = onUpdate;
     }
 
     public void start() {
@@ -44,6 +46,10 @@ public class TextAnimation {
             currentIndex = 0;
         } else {
             currentIndex = (currentIndex + 1) % text.size();
+        }
+
+        if (onUpdate != null) {
+            onUpdate.run();
         }
     }
 
