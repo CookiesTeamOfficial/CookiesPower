@@ -20,7 +20,7 @@ public class InventoryManager implements Listener {
 
     public InventoryManager(CookiesPower plugin) {
         this.plugin = plugin;
-        this.customInventoryHolder = new CustomInventoryHolder(plugin.pluginIdentifierId);
+        this.customInventoryHolder = new CustomInventoryHolder(plugin.getPluginIdentifierId());
     }
 
 
@@ -87,7 +87,7 @@ public class InventoryManager implements Listener {
         Inventory inventory = event.getInventory();
         InventoryHolder holder = inventory.getHolder();
         if (holder instanceof CustomInventoryHolder inventoryHolder) {
-            if (inventoryHolder.pluginIdentifierId().equals(plugin.pluginIdentifierId)) {
+            if (inventoryHolder.pluginIdentifierId().equals(plugin.getPluginIdentifierId())) {
                 ArrayList<String> notNeedCancelledInventoryList = new ArrayList<>();
                 notNeedCancelledInventoryList.add("");
                 if (!notNeedCancelledInventoryList.contains(event.getView().getTitle())) {

@@ -69,7 +69,7 @@ public class ChatModule implements ModuleListener, BukkitConsole {
             List<String> actions = chatFileManager.getColoredStringList(cookiesPlayer, "chat.player_nick.click.actions");
             CookiesComponentBuilder builder = new CookiesComponentBuilder();
 
-            playerNameComponent.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/" + plugin.pluginIdentifierId + ":[sendPlayerInteraction] " + cookiesPlayer.getUniqueId()));
+            playerNameComponent.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/" + plugin.getPluginIdentifierId() + ":[sendPlayerInteraction] " + cookiesPlayer.getUniqueId()));
 
             actions.forEach(action -> processClickActions(action, cookiesPlayer, builder));
 
@@ -108,7 +108,7 @@ public class ChatModule implements ModuleListener, BukkitConsole {
         String message = event.getMessage();
         Player player = event.getPlayer();
 
-        if (message.startsWith("/" + plugin.pluginIdentifierId)) {
+        if (message.startsWith("/" + plugin.getPluginIdentifierId())) {
             String[] commands = message.split(":", 2);
             if (commands.length == 2) {
                 String[] send = commands[1].split(" ", 2);

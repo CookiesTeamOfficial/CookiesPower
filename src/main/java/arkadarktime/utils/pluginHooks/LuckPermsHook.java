@@ -16,14 +16,16 @@ public class LuckPermsHook implements HookPlugin {
     @Override
     public void hook() {
         String name = "LuckPerms";
-        if (Bukkit.getPluginManager().getPlugin(name) != null) {
+        if (Bukkit.getPluginManager().getPlugin(name) != null && Bukkit.getPluginManager().isPluginEnabled(name)) {
             RegisteredServiceProvider<LuckPerms> provider = Bukkit.getServicesManager().getRegistration(LuckPerms.class);
+
             if (provider != null) {
-                plugin.luckPermsAPI = provider.getProvider();
+                plugin.setLuckPerms(provider.getProvider());
+                sendMessage(name, true);
+                return;
             }
-            sendMessage(name, true);
-        } else {
-            sendMessage(name, false);
         }
+
+        sendMessage(name, false);
     }
 }

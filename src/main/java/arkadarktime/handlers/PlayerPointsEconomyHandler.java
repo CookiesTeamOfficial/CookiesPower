@@ -13,16 +13,16 @@ public class PlayerPointsEconomyHandler implements EconomyHandler {
 
     @Override
     public boolean depositMoney(Player player, double amount) {
-        return plugin.playerPointsAPI.give(player.getUniqueId(), (int) amount);
+        return plugin.getPlayerPointsEconomy().give(player.getUniqueId(), (int) amount);
     }
 
     @Override
     public boolean withdrawMoney(Player player, double amount) {
-        return plugin.playerPointsAPI.take(player.getUniqueId(), (int) amount);
+        return plugin.getPlayerPointsEconomy().take(player.getUniqueId(), (int) amount);
     }
 
     @Override
     public double getBalance(Player player) {
-        return plugin.playerPointsAPI.look(player.getUniqueId());
+        return plugin.getPlayerPointsEconomy().look(player.getUniqueId());
     }
 }

@@ -30,23 +30,23 @@ import java.util.UUID;
 
 public final class CookiesPower extends JavaPlugin implements BukkitConsole {
     // Other
-    public final String pluginIdentifierId = "CookiesPowerPluginByArkaDarkTime-" + UUID.randomUUID();
-    public String langCode;
+    private final String pluginIdentifierId = "CookiesPowerPluginByArkaDarkTime-" + UUID.randomUUID();
+    private String langCode;
     // Files
-    public FileConfiguration langFileManager;
-    public FileConfiguration tablistFileManager;
-    public FileConfiguration chatFileManager;
-    public FileConfiguration serverFileManager;
-    public FileConfiguration animationsFileManager;
+    private FileConfiguration langFileManager;
+    private FileConfiguration tablistFileManager;
+    private FileConfiguration chatFileManager;
+    private FileConfiguration serverFileManager;
+    private FileConfiguration animationsFileManager;
     // Managers
     private PlayerDatabaseManager playerDatabaseManager;
     private AnimationsManager animationsManager;
     // Plugin hooks
-    public boolean placeholderApiHooked = false; // Is placeholder api hooked
-    public ProtocolManager protocolManager; // Manage protocols
-    public LuckPerms luckPermsAPI; // Manage permission
-    public Economy vaultAPI; // Vault economy
-    public PlayerPointsAPI playerPointsAPI; // PlayerPoints economy
+    private boolean placeholderApiHooked = false; // Is placeholder api hooked
+    private ProtocolManager protocolManager; // Manage protocols
+    private LuckPerms luckPermsAPI; // Manage permission
+    private Economy vaultAPI; // Vault economy
+    private PlayerPointsAPI playerPointsAPI; // PlayerPoints economy
     // Modules
     public final TablistModule tablistModule = new TablistModule(this);
     public final DeathModule deathModule = new DeathModule(this);
@@ -281,5 +281,55 @@ public final class CookiesPower extends JavaPlugin implements BukkitConsole {
             e.printStackTrace();
             Console(BukkitConsole.ConsoleType.ERROR, "Failed to copy " + destFile.getName() + " file: " + e.getMessage(), BukkitConsole.LineType.SIDE_LINES);
         }
+    }
+
+    // Plugin Identifier
+    public String getPluginIdentifierId() {
+        return pluginIdentifierId;
+    }
+
+    // ProtocolLib
+    public ProtocolManager getProtocolManager() {
+        return this.protocolManager;
+    }
+
+    public void setProtocolManager(ProtocolManager protocolManager) {
+        this.protocolManager = protocolManager;
+    }
+
+    // PlaceholderAPI
+    public boolean isPlaceholderApiHooked() {
+        return this.placeholderApiHooked;
+    }
+
+    public void setPlaceholderApiHooked(boolean placeholderApiHooked) {
+        this.placeholderApiHooked = placeholderApiHooked;
+    }
+
+    // LuckPerms
+    public LuckPerms getLuckPerms() {
+        return this.luckPermsAPI;
+    }
+
+    public void setLuckPerms(LuckPerms luckPermsAPI) {
+        this.luckPermsAPI = luckPermsAPI;
+    }
+
+    // Vault
+    public Economy getVaultEconomy() {
+        return this.vaultAPI;
+    }
+
+    public void setVaultEconomy(Economy vaultAPI) {
+        this.vaultAPI = vaultAPI;
+    }
+
+    // PlayerPoints
+    public PlayerPointsAPI getPlayerPointsEconomy() {
+        return this.playerPointsAPI;
+    }
+
+    public void setPlayerPointsEconomy(PlayerPointsAPI playerPointsAPI) {
+        this.playerPointsAPI = playerPointsAPI;
     }
 }

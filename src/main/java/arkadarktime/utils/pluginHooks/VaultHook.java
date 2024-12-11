@@ -16,14 +16,16 @@ public class VaultHook implements HookPlugin {
     @Override
     public void hook() {
         String name = "Vault";
-        if (Bukkit.getPluginManager().getPlugin(name) != null) {
+        if (Bukkit.getPluginManager().getPlugin(name) != null && Bukkit.getPluginManager().isPluginEnabled(name)) {
             RegisteredServiceProvider<Economy> rsp = Bukkit.getServer().getServicesManager().getRegistration(Economy.class);
+
             if (rsp != null) {
-                plugin.vaultAPI = rsp.getProvider();
+                plugin.setVaultEconomy(rsp.getProvider());
                 sendMessage(name, true);
+                return;
             }
-        } else {
-            sendMessage(name, false);
         }
+
+        sendMessage(name, false);
     }
 }

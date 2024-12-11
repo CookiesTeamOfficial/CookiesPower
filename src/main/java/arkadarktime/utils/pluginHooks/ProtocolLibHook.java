@@ -15,11 +15,15 @@ public class ProtocolLibHook implements HookPlugin {
     @Override
     public void hook() {
         String name = "ProtocolLib";
-        if (Bukkit.getPluginManager().getPlugin(name) != null) {
-            plugin.protocolManager = ProtocolLibrary.getProtocolManager();
-            sendMessage(name, true);
-        } else {
-            sendMessage(name, false);
+        if (Bukkit.getPluginManager().getPlugin(name) != null && Bukkit.getPluginManager().isPluginEnabled(name)) {
+            plugin.setProtocolManager(ProtocolLibrary.getProtocolManager());
+
+            if (!plugin.getProtocolManager().isClosed() || plugin.getProtocolManager() != null) {
+                sendMessage(name, true);
+                return;
+            }
         }
+
+        sendMessage(name, false);
     }
 }

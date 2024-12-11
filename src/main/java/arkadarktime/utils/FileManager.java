@@ -139,7 +139,7 @@ public class FileManager extends FileConfiguration implements BukkitConsole {
             message = message.replace("%plugin-prefix%", prefix);
         }
 
-        if (plugin.placeholderApiHooked) {
+        if (plugin.isPlaceholderApiHooked()) {
             Player player = cookiesPlayer != null ? cookiesPlayer.getPlayer() : null;
             message = PlaceholderAPI.setPlaceholders(player, message);
         }

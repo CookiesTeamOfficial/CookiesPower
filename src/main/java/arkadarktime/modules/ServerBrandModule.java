@@ -130,7 +130,7 @@ public class ServerBrandModule implements ModuleTicker, BukkitConsole {
 
         try {
             WirePacket customPacket = new WirePacket(PacketType.Play.Server.CUSTOM_PAYLOAD, data);
-            plugin.protocolManager.sendWirePacket(player, customPacket);
+            plugin.getProtocolManager().sendWirePacket(player, customPacket);
         } catch ( Throwable ignored ) {
         }
     }

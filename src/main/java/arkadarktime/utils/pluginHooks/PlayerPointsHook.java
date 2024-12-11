@@ -15,11 +15,15 @@ public class PlayerPointsHook implements HookPlugin {
     @Override
     public void hook() {
         String name = "PlayerPoints";
-        if (Bukkit.getPluginManager().getPlugin(name) != null) {
-            plugin.playerPointsAPI = PlayerPoints.getInstance().getAPI();
-            sendMessage(name, true);
-        } else {
-            sendMessage(name, false);
+        if (Bukkit.getPluginManager().getPlugin(name) != null && Bukkit.getPluginManager().isPluginEnabled(name)) {
+            plugin.setPlayerPointsEconomy(PlayerPoints.getInstance().getAPI());
+
+            if (plugin.getPlayerPointsEconomy() != null) {
+                sendMessage(name, true);
+                return;
+            }
         }
+
+        sendMessage(name, false);
     }
 }

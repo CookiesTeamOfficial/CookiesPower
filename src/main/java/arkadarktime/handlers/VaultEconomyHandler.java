@@ -14,18 +14,18 @@ public class VaultEconomyHandler implements EconomyHandler {
 
     @Override
     public boolean depositMoney(Player player, double amount) {
-        EconomyResponse response = plugin.vaultAPI.depositPlayer(player, amount);
+        EconomyResponse response = plugin.getVaultEconomy().depositPlayer(player, amount);
         return response.transactionSuccess();
     }
 
     @Override
     public boolean withdrawMoney(Player player, double amount) {
-        EconomyResponse response = plugin.vaultAPI.withdrawPlayer(player, amount);
+        EconomyResponse response = plugin.getVaultEconomy().withdrawPlayer(player, amount);
         return response.transactionSuccess();
     }
 
     @Override
     public double getBalance(Player player) {
-        return plugin.vaultAPI.getBalance(player);
+        return plugin.getVaultEconomy().getBalance(player);
     }
 }

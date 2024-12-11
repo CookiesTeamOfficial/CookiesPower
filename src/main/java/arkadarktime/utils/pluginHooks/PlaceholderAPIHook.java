@@ -15,11 +15,15 @@ public class PlaceholderAPIHook implements HookPlugin {
     @Override
     public void hook() {
         String name = "PlaceholderAPI";
-        if (Bukkit.getPluginManager().getPlugin(name) != null) {
-            plugin.placeholderApiHooked = new PlaceholderAPIManager(plugin).register();
-            sendMessage(name, true);
-        } else {
-            sendMessage(name, true);
+        if (Bukkit.getPluginManager().getPlugin(name) != null && Bukkit.getPluginManager().isPluginEnabled(name)) {
+            plugin.setPlaceholderApiHooked(new PlaceholderAPIManager(plugin).register());
+
+            if (plugin.isPlaceholderApiHooked()) {
+                sendMessage(name, true);
+                return;
+            }
         }
+
+        sendMessage(name, false);
     }
 }
