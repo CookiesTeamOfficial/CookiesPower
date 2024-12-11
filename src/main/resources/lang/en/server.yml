@@ -138,11 +138,11 @@ server-brand:
   # Use random text from the list
   random: false
   # Server brand update time
-  update-interval: 1s
+  update-interval: 0.5s
   # MOTD text
   texts:
-    - "&dCookiesPower"
-    - "&aCookiesPower"
-    - "&eCookiesPower"
-    - "&cCookiesPower"
-    - "&3CookiesPower"
+    - "&dCookiesPower&r"
+    - "&aCookiesPower&r"
+    - "&eCookiesPower&r"
+    - "&cCookiesPower&r"
+    - "&3CookiesPower&r"

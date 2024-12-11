@@ -94,8 +94,6 @@ public class ServerBrandModule implements ModuleTicker, BukkitConsole {
             brandIndex = (brandIndex + 1) % brandTexts.size();
         }
 
-        Console("Update server brand to: " + brand);
-
         Bukkit.getOnlinePlayers().forEach(this::updateBrandForPlayer);
     }
 
