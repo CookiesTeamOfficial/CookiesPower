@@ -59,7 +59,7 @@ animations:
       - "#29A3FBʏ#3AADFCᴏ#4AB7FCᴜ#5BC1FCʀ #6BCBFCꜱ#7CD5FCᴇ#8CDFFDʀ#9DE9FDᴠ#ADF3FDᴇ#9DE9FDʀ"
       - "#1999FBʏ#29A3FBᴏ#3AADFCᴜ#4AB7FCʀ #5BC1FCꜱ#6BCBFCᴇ#7CD5FCʀ#8CDFFDᴠ#9DE9FDᴇ#ADF3FDʀ"
   cookiespower:
-    change-interval: 50ms
+    change-interval: 1s
     texts:
       - "&#FF9900Co&#FF9300ok&#FF8D00ie&#FF8800sP&#FF8200ow&#FF7C00er"
       - "&#FF9300Co&#FF9900ok&#FF9300ie&#FF8D00sP&#FF8800ow&#FF8200er"
