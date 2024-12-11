@@ -62,7 +62,7 @@ public class ServerBrandModule implements ModuleTicker, BukkitConsole {
         FileManager serverFileManager = new FileManager(plugin, plugin.getServerFile());
         initUpdateServerBrand();
         if (serverFileManager.getColoredStringList(null, "server-brand.texts").size() != 1) {
-            long updateTime = customUtils.parseTime(serverFileManager.getString("server-brand.update-interval", "1s"), TimeUnit.TICKS);
+            long updateTime = customUtils.parseTime(serverFileManager.getString("server-brand.update-interval"), TimeUnit.TICKS);
             brandUpdateTaskId = Bukkit.getScheduler().runTaskTimerAsynchronously(plugin, this::update, 0L, updateTime).getTaskId();
         }
     }
@@ -93,6 +93,8 @@ public class ServerBrandModule implements ModuleTicker, BukkitConsole {
             brand = brandTexts.get(brandIndex);
             brandIndex = (brandIndex + 1) % brandTexts.size();
         }
+
+        Console("Update server brand to: " + brand);
 
         Bukkit.getOnlinePlayers().forEach(this::updateBrandForPlayer);
     }
@@ -130,7 +132,7 @@ public class ServerBrandModule implements ModuleTicker, BukkitConsole {
 
         try {
             WirePacket customPacket = new WirePacket(PacketType.Play.Server.CUSTOM_PAYLOAD, data);
-            plugin.getProtocolManager().sendWirePacket(player, customPacket);
+            plugin.getProtocolManager().sendWirePacket(cookiesPlayer.getPlayer(), customPacket);
         } catch ( Throwable ignored ) {
         }
     }

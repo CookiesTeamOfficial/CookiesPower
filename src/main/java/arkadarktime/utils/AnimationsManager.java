@@ -28,13 +28,7 @@ public class AnimationsManager {
                     String updateTime = animConfig.getString("change-interval");
                     List<String> texts = animConfig.getStringList("texts");
                     if (!texts.isEmpty()) {
-                        Runnable onUpdate;
-                        onUpdate = () -> {
-                            plugin.tablistModule.update();
-                            plugin.serverMotdModule.update();
-                            plugin.serverBrandModule.update();
-                        };
-
+                        Runnable onUpdate = plugin.tablistModule::update;
                         animations.put(anim, new TextAnimation(plugin, updateTime, texts, onUpdate));
                     }
                 }
